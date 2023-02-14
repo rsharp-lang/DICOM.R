@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 Public Class Header
@@ -6,7 +7,13 @@ Public Class Header
     Public Property magicNumber As MagicNumber
     Public Property metadata As Dictionary(Of String, String)
 
-    Public Function ToMetadata() As Metadata
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub add(name As String, value As String)
+        metadata.Add(name, value)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function toMetadata() As Metadata
         Return New Metadata With {
             .type = [Enum].Parse(GetType(Types), metadata.TryGetValue("type", [default]:="float")),
             .dimension = Integer.Parse(metadata.TryGetValue("dimension", [default]:=3)),

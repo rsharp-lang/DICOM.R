@@ -2,11 +2,13 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Values
 
 Public Class FileReader : Implements IDisposable
 
     ReadOnly file As Stream
     ReadOnly header As Header
+    ReadOnly comments As New List(Of String)
 
     Public ReadOnly Property NrddHeader As Metadata
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -34,8 +36,12 @@ Public Class FileReader : Implements IDisposable
         }
 
         Do While Not (line = read.ReadLine).StringEmpty
-            metadata = line.Value.GetTagValue(":", trim:=True)
-            header.metadata(metadata.Name) = metadata.Value
+            If line.First = "#"c Then
+                comments.Add(line)
+            Else
+                metadata = line.GetTagValue(":", trim:=True)
+                header.add(metadata.Name, metadata.Value)
+            End If
         Loop
 
         scan0 = file.Position

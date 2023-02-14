@@ -39,8 +39,13 @@ Public Module Rscript
         Return reader
     End Function
 
+    <ExportAPI("metadata")>
+    Public Function GetMetadata(nrrd As FileReader) As Metadata
+        Return nrrd.NrddHeader
+    End Function
+
     <ExportAPI("getRaster")>
-    Public Function GetRaster(nrdd As FileReader)
+    Public Function GetRaster(nrrd As FileReader)
 
     End Function
 End Module
