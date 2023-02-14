@@ -1,4 +1,9 @@
-﻿Imports Microsoft.VisualBasic.Scripting.MetaData
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
 ''' ## Nearly Raw Raster Data
@@ -21,5 +26,21 @@
 <Package("NRRD")>
 Public Module Rscript
 
+    <ExportAPI("nrrdRead")>
+    <RApiReturn(GetType(FileReader))>
+    Public Function nrrdRead(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim filedata = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
+        If filedata Like GetType(Message) Then
+            Return filedata.TryCast(Of Message)
+        End If
+
+        Dim reader As New FileReader(filedata.TryCast(Of Stream))
+        Return reader
+    End Function
+
+    <ExportAPI("getRaster")>
+    Public Function GetRaster(nrdd As FileReader)
+
+    End Function
 End Module
