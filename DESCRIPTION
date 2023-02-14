@@ -1,4 +1,4 @@
-Package: VisualBasic.R
+Package: NRRD
 Type: Package
 Title: VisualBasic.NET function port to R
 Version: 1.0.148
