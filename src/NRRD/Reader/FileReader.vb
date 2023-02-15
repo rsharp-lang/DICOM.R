@@ -1,4 +1,4 @@
-Imports System.IO
+ï»¿Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -61,13 +61,13 @@ Public Class FileReader : Implements IDisposable
         Select Case metadata.encoding
             Case Encoding.raw : Return New MemoryStream(bytes)
             Case Encoding.gzip, Encoding.gz
-                ' ´´½¨Ò»¸öGZip½âÑ¹Á÷
+                ' åˆ›å»ºä¸€ä¸ªGZipè§£å‹æµ
                 Dim gz As New GZipStream(New MemoryStream(bytes), CompressionMode.Decompress)
-                ' ÓÃÒ»¸öÁÙÊ±ÄÚ´æÁ÷À´±£´æ½âÑ¹Êı¾İ
+                ' ç”¨ä¸€ä¸ªä¸´æ—¶å†…å­˜æµæ¥ä¿å­˜è§£å‹æ•°æ®
                 Dim ms As New MemoryStream
-                ' »º³åÊı¾İ
+                ' ç¼“å†²æ•°æ®
                 Dim buf(99) As Byte, i As Integer = 0
-                ' ²»¶Ï´ÓÁ÷ÖĞ½âÑ¹Êı¾İ
+                ' ä¸æ–­ä»æµä¸­è§£å‹æ•°æ®
                 While True
                     i = gz.Read(buf, 0, 100)
 
@@ -78,7 +78,7 @@ Public Class FileReader : Implements IDisposable
                     End If
                 End While
 
-                ' ¹Ø±ÕËùÓĞµÄÁ÷
+                ' å…³é—­æ‰€æœ‰çš„æµ
                 Call gz.Close()
 
                 Return ms
