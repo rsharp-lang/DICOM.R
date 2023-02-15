@@ -58,6 +58,8 @@ Public Class FileReader : Implements IDisposable
         file.Seek(scan0, SeekOrigin.Begin)
         file.Read(bytes, 0, bytes.Length)
 
+        Call bytes.FlushStream("D:\NRRD\test\gzip_test.gz")
+
         Select Case metadata.encoding
             Case Encoding.raw : Return New MemoryStream(bytes)
             Case Encoding.gzip, Encoding.gz
