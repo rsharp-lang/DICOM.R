@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Data.IO
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
+Imports stdNum = System.Math
 
 Public Module BytesBuffer
 
@@ -31,6 +33,43 @@ Public Module BytesBuffer
         End Select
     End Function
 
+    ''' <summary>
+    ''' This ALWAYS returns an integer, Or throws an exception.
+    ''' </summary>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    Public Function getNRRDTypeSize(type As Types) As Integer
+        Select Case type
+            Case Types.int8 : Return 1
+            Case Types.uint8 : Return 1
+            Case Types.int16 : Return 2
+            Case Types.uint16 : Return 2
+            Case Types.int32 : Return 4
+            Case Types.uint32 : Return 4
+            Case Types.int64 : Return 8
+            Case Types.uint64 : Return 8
+            Case Types.float : Return 4
+            Case Types.double : Return 8
+            Case Else
+                Throw New Exception("Do not know the size of NRRD type: " & type.Description)
+        End Select
+    End Function
+
+    Public Function checkBufferSize(buffer As Stream, options As Metadata) As Integer
+        Dim totalLen As Integer = 1
+        Dim sizes As Integer() = options.sizes
+        Dim type As Types = options.type
+
+        For Each int As Integer In sizes
+            totalLen *= int
+        Next
+
+        Dim requiredSize As Integer = totalLen * getNRRDTypeSize(type)
+        Dim bufferSize As Integer = buffer.Length
+
+        Return stdNum.Abs(bufferSize - requiredSize)
+    End Function
+
     Public Function parseNRRDRawData(buffer As BinaryDataReader, options As Metadata) As Array
         Dim totalLen As Integer = 1
         Dim sizes As Integer() = options.sizes
@@ -40,14 +79,14 @@ Public Module BytesBuffer
             totalLen *= int
         Next
 
-        If Type = Types.block Then
+        If type = Types.block Then
             ' Don't do anything special, just return the slice containing all blocks.
             Return buffer.ReadBytes(totalLen * options.blockSize)
         Else
             buffer.ByteOrder = options.endian
         End If
 
-        Select Case Type
+        Select Case type
             Case Types.int8 : Return buffer.ReadSBytes(totalLen)
             Case Types.uint8 : Return buffer.ReadBytes(totalLen)
             Case Types.int16 : Return buffer.ReadInt16s(totalLen)
@@ -57,7 +96,7 @@ Public Module BytesBuffer
             Case Types.float : Return buffer.ReadSingles(totalLen)
             Case Types.double : Return buffer.ReadDoubles(totalLen)
             Case Else
-                Throw New NotImplementedException(Type.Description)
+                Throw New NotImplementedException(type.Description)
         End Select
     End Function
 

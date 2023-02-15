@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -28,24 +29,32 @@ Public Class FileReader : Implements IDisposable
     End Sub
 
     Public Function LoadRaster()
-        Dim bytes As New BinaryDataReader(loadNrrdRawBuffer)
+        Dim options As Metadata = Nothing
+        Dim bytes As New BinaryDataReader(loadNrrdRawBuffer(options))
         Dim data As Array
+        Dim deltaSize As Integer = BytesBuffer.checkBufferSize(bytes.BaseStream, options)
+
+        If deltaSize <> 0 Then
+            Throw New InvalidDataException($"The required size of the raster data is not matched(delta_size {deltaSize} bytes) with the nrdd sub-stream size!")
+        End If
 
         ' the source stream is loaded from
         ' the nrdd file substream
         ' the actually scan0 is ZERO
         bytes.Seek(0, SeekOrigin.Begin)
-        data = BytesBuffer.parseNRRDRawData(bytes, header.toMetadata)
+        data = BytesBuffer.parseNRRDRawData(bytes, options)
 
-
+        Return data
     End Function
 
-    Private Function loadNrrdRawBuffer() As MemoryStream
-        Dim size As Integer = file.Length - scan0 - 1
+    Private Function loadNrrdRawBuffer(ByRef metadata As Metadata) As MemoryStream
+        Dim size As Integer = file.Length - scan0
         Dim bytes As Byte() = New Byte(size - 1) {}
-        Dim metadata As Metadata = header.toMetadata
 
-        file.Seek(scan0 + 1, SeekOrigin.Begin)
+        ' get raster data reader options
+        metadata = header.toMetadata
+
+        file.Seek(scan0, SeekOrigin.Begin)
         file.Read(bytes, 0, bytes.Length)
 
         Select Case metadata.encoding
@@ -58,7 +67,7 @@ Public Class FileReader : Implements IDisposable
     End Function
 
     Private Function loadNrrdHeader() As Header
-        Dim read As New StreamReader(file)
+        Dim read As New StreamReader(file, System.Text.Encoding.ASCII)
         Dim magic As String = read.ReadLine
         Dim line As Value(Of String) = ""
         Dim metadata As NamedValue(Of String)

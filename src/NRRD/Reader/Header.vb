@@ -12,24 +12,28 @@ Public Class Header
         metadata.Add(name, value)
     End Sub
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function toMetadata() As Metadata
+        Dim type As Types = BytesBuffer.parseNRRDType(descriptor:=metadata.TryGetValue("type", [default]:="float"))
+        Dim sizes As Integer() = metadata _
+            .TryGetValue("sizes", [default]:="0 0 0") _
+            .Split(" "c) _
+            .Select(AddressOf Integer.Parse) _
+            .ToArray
+        Dim origin = Point3D.Parse(metadata.TryGetValue("space origin"))
+        Dim dirs = metadata _
+            .TryGetValue("space directions", [default]:="") _
+            .Split _
+            .Select(AddressOf Point3D.Parse) _
+            .ToArray
+
         Return New Metadata With {
-            .type = [Enum].Parse(GetType(Types), metadata.TryGetValue("type", [default]:="float")),
+            .type = type,
             .dimension = Integer.Parse(metadata.TryGetValue("dimension", [default]:=3)),
             .encoding = [Enum].Parse(GetType(Encoding), metadata.TryGetValue("encoding", [default]:="gzip")),
             .endian = If(metadata.TryGetValue("endian", [default]:="little") = "little", ByteOrder.LittleEndian, ByteOrder.BigEndian),
-            .sizes = metadata _
-                .TryGetValue("sizes", [default]:="0 0 0") _
-                .Split(" "c) _
-                .Select(AddressOf Integer.Parse) _
-                .ToArray,
-            .space_origin = Point3D.Parse(metadata.TryGetValue("space origin")),
-            .space_directions = metadata _
-                .TryGetValue("space directions") _
-                .Split _
-                .Select(AddressOf Point3D.Parse) _
-                .ToArray
+            .sizes = sizes,
+            .space_origin = origin,
+            .space_directions = dirs
         }
     End Function
 
