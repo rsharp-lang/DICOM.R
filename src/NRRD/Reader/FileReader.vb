@@ -11,10 +11,6 @@ Public Class FileReader : Implements IDisposable
     ReadOnly file As Stream
     ReadOnly header As Header
     ReadOnly comments As New List(Of String)
-    ''' <summary>
-    ''' decoded raw stream
-    ''' </summary>
-    ReadOnly memory As Array
 
     Public ReadOnly Property NrddHeader As Metadata
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
