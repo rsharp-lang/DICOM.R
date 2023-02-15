@@ -13,6 +13,7 @@ Public Class Metadata
     Public Property endian As ByteOrder
     Public Property space_directions As Point3D()
     Public Property space_origin As Point3D
+    Public Property blockSize As Integer
 
 End Class
 
@@ -29,8 +30,17 @@ Public Enum Encoding
 End Enum
 
 Public Enum Types
+    int8
+    uint8
+    int16
+    uint16
+    int32
+    uint32
+    int64
+    uint64
     int
     float
+    [double]
     ''' <summary>
     ''' unsigned char
     ''' </summary>

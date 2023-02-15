@@ -1,19 +1,25 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class FileReader : Implements IDisposable
 
     ReadOnly file As Stream
     ReadOnly header As Header
     ReadOnly comments As New List(Of String)
+    ''' <summary>
+    ''' decoded raw stream
+    ''' </summary>
+    ReadOnly memory As Array
 
     Public ReadOnly Property NrddHeader As Metadata
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return header.ToMetadata
+            Return header.toMetadata
         End Get
     End Property
 
@@ -24,6 +30,36 @@ Public Class FileReader : Implements IDisposable
         Me.file = file
         Me.header = loadNrrdHeader()
     End Sub
+
+    Public Function LoadRaster()
+        Dim bytes As New BinaryDataReader(loadNrrdRawBuffer)
+        Dim data As Array
+
+        ' the source stream is loaded from
+        ' the nrdd file substream
+        ' the actually scan0 is ZERO
+        bytes.Seek(0, SeekOrigin.Begin)
+        data = BytesBuffer.parseNRRDRawData(bytes, header.toMetadata)
+
+
+    End Function
+
+    Private Function loadNrrdRawBuffer() As MemoryStream
+        Dim size As Integer = file.Length - scan0
+        Dim bytes As Byte() = New Byte(size - 1) {}
+        Dim metadata As Metadata = header.toMetadata
+
+        file.Seek(scan0, SeekOrigin.Begin)
+        file.Read(bytes, scan0, bytes.Length)
+
+        Select Case metadata.encoding
+            Case Encoding.raw : Return New MemoryStream(bytes)
+            Case Encoding.gzip, Encoding.gz
+                Return GZipStreamHandler.UnGzipStream(bytes)
+            Case Else
+                Throw New NotImplementedException(metadata.encoding)
+        End Select
+    End Function
 
     Private Function loadNrrdHeader() As Header
         Dim read As New StreamReader(file)
