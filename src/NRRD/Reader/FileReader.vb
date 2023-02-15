@@ -41,17 +41,17 @@ Public Class FileReader : Implements IDisposable
     End Function
 
     Private Function loadNrrdRawBuffer() As MemoryStream
-        Dim size As Integer = file.Length - scan0
+        Dim size As Integer = file.Length - scan0 - 1
         Dim bytes As Byte() = New Byte(size - 1) {}
         Dim metadata As Metadata = header.toMetadata
 
-        file.Seek(scan0, SeekOrigin.Begin)
-        file.Read(bytes, scan0, bytes.Length)
+        file.Seek(scan0 + 1, SeekOrigin.Begin)
+        file.Read(bytes, 0, bytes.Length)
 
         Select Case metadata.encoding
             Case Encoding.raw : Return New MemoryStream(bytes)
             Case Encoding.gzip, Encoding.gz
-                Return GZipStreamHandler.UnGzipStream(bytes)
+                Return bytes.UnGzipStream
             Case Else
                 Throw New NotImplementedException(metadata.encoding)
         End Select
