@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -60,7 +61,27 @@ Public Class FileReader : Implements IDisposable
         Select Case metadata.encoding
             Case Encoding.raw : Return New MemoryStream(bytes)
             Case Encoding.gzip, Encoding.gz
-                Return bytes.UnGzipStream
+                ' 创建一个GZip解压流
+                Dim gz As New GZipStream(New MemoryStream(bytes), CompressionMode.Decompress)
+                ' 用一个临时内存流来保存解压数据
+                Dim ms As New MemoryStream
+                ' 缓冲数据
+                Dim buf(99) As Byte, i As Integer = 0
+                ' 不断从流中解压数据
+                While True
+                    i = gz.Read(buf, 0, 100)
+
+                    If i = 0 Then
+                        Exit While
+                    Else
+                        ms.Write(buf, 0, i)
+                    End If
+                End While
+
+                ' 关闭所有的流
+                Call gz.Close()
+
+                Return ms
             Case Else
                 Throw New NotImplementedException(metadata.encoding)
         End Select
