@@ -1,4 +1,5 @@
 require(NRRD);
+require(graphics2D);
 
 setwd(@dir);
 
@@ -11,8 +12,8 @@ raster = NRRD::getRaster(nrrd);
 
 print(raster);
 
-bitmap(file = "./raster_image_heatmap.png");
+bitmap(file = "./raster_image_heatmap.png", size = [1024,1024]);
 
-rasterHeatmap(raster, colorName = "jet");
+graphics2D::rasterHeatmap(raster, colorName = "jet");
 
 dev.off();
