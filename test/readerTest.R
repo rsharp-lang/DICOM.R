@@ -1,3 +1,5 @@
+# require(NRRD);
+
 setwd(@dir);
 
 nrrd = NRRD::nrrdRead("..\data\stent.nrrd");

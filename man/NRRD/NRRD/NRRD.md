@@ -17,3 +17,6 @@
  fancier things like projection, histogram equalization, and filtered
  resampling (up and down) with arbitrary seperable kernels.
 
++ [nrrdRead](NRRD/nrrdRead.1) 
++ [metadata](NRRD/metadata.1) 
++ [getRaster](NRRD/getRaster.1) 

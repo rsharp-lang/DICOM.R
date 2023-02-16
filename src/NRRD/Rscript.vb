@@ -45,7 +45,7 @@ Public Module Rscript
     End Function
 
     <ExportAPI("getRaster")>
-    Public Function GetRaster(nrrd As FileReader)
+    Public Function GetRaster(nrrd As FileReader) As RasterObject
         Return nrrd.LoadRaster
     End Function
 End Module

@@ -32,7 +32,7 @@ Public Class FileReader : Implements IDisposable
         End If
     End Sub
 
-    Public Function LoadRaster()
+    Public Function LoadRaster() As RasterObject
         Dim options As Metadata = Nothing
         Dim rawdata = loadNrrdRawBuffer(options)
         Dim bytes As New BinaryDataReader(BytesBuffer.checkBufferSize(rawdata, options))
@@ -44,7 +44,7 @@ Public Class FileReader : Implements IDisposable
         bytes.Seek(0, SeekOrigin.Begin)
         data = BytesBuffer.parseNRRDRawData(bytes, options)
 
-        Return data
+        Return RasterObject.CreateRasterObject(options, data)
     End Function
 
     Private Function loadNrrdRawBuffer(ByRef metadata As Metadata) As MemoryStream
