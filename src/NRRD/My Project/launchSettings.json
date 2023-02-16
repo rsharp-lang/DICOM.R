@@ -6,7 +6,7 @@
     "r-script": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "\"\\NRRD\\test\\readerTest.R\" --attach \"\\NRRD\""
+      "commandLineArgs": "\"\\NRRD\\test\\rasterImage.R\" --attach \"\\NRRD\""
     }
   }
 }

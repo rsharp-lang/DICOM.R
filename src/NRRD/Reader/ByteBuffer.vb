@@ -68,7 +68,7 @@ Public Module BytesBuffer
         Dim bufferSize As Integer = buffer.Length
         Dim increase As Integer = stdNum.Abs(bufferSize - requiredSize)
 
-        If increase > 0 Then
+        If requiredSize > bufferSize Then
             Throw New InvalidDataException($"The required size of the raster data is not matched(delta_size {increase} bytes) with the nrdd sub-stream size!")
         End If
 
