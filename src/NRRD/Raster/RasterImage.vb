@@ -34,7 +34,7 @@ Public Class RasterImage : Inherits RasterObject
         For i As Integer = 0 To dimensionSize(1) - 1
             For j As Integer = 0 To dimensionSize(0) - 1
                 Yield New PixelData With {
-                    .Scale = grayscale(i)(j),
+                    .Scale = grayscale(j)(i),
                     .X = i,
                     .Y = j
                 }
