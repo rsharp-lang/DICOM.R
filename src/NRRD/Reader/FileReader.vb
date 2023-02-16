@@ -50,10 +50,11 @@ Public Class FileReader : Implements IDisposable
     Private Function loadNrrdRawBuffer(ByRef metadata As Metadata) As MemoryStream
         Dim size As Integer = file.Length - scan0 - 1
         Dim bytes As Byte() = New Byte(size - 1) {}
-        Dim byteShifts As Integer = If(metadata.encoding = Encoding.raw, 5, 1)
+        Dim byteShifts As Integer
 
         ' get raster data reader options
         metadata = header.toMetadata
+        byteShifts = If(metadata.encoding = Encoding.raw, 5, 1)
 
         file.Seek(scan0 + byteShifts, SeekOrigin.Begin)
         file.Read(bytes, 0, bytes.Length)
