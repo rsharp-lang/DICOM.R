@@ -9,3 +9,5 @@ str(header);
 raster = NRRD::getRaster(nrrd);
 
 print(raster);
+
+
