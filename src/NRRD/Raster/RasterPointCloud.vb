@@ -11,7 +11,7 @@ Public Class RasterPointCloud : Inherits RasterObject
     Public Function GetRasterImage(i As Integer) As RasterImage
         Return New RasterImage With {
             .dimensionSize = dimensionSize.Take(2).ToArray,
-            .grayscale = volumn(i),
+            .grayscale = volumn(i - 1),
             .metadata = metadata
         }
     End Function
