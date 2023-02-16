@@ -55,7 +55,7 @@ Public Module BytesBuffer
         End Select
     End Function
 
-    Public Function checkBufferSize(buffer As Stream, options As Metadata) As Integer
+    Friend Function checkBufferSize(buffer As MemoryStream, options As Metadata) As MemoryStream
         Dim totalLen As Integer = 1
         Dim sizes As Integer() = options.sizes
         Dim type As Types = options.type
@@ -66,8 +66,15 @@ Public Module BytesBuffer
 
         Dim requiredSize As Integer = totalLen * getNRRDTypeSize(type)
         Dim bufferSize As Integer = buffer.Length
+        Dim increase As Integer = stdNum.Abs(bufferSize - requiredSize)
 
-        Return stdNum.Abs(bufferSize - requiredSize)
+        If increase > 0 Then
+            Throw New InvalidDataException($"The required size of the raster data is not matched(delta_size {increase} bytes) with the nrdd sub-stream size!")
+        End If
+
+        Call buffer.Seek(0, SeekOrigin.Begin)
+
+        Return buffer
     End Function
 
     Public Function parseNRRDRawData(buffer As BinaryDataReader, options As Metadata) As Array

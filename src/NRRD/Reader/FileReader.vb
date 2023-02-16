@@ -1,7 +1,5 @@
 ﻿Imports System.IO
-Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -13,6 +11,7 @@ Public Class FileReader : Implements IDisposable
     ReadOnly file As Stream
     ReadOnly header As Header
     ReadOnly comments As New List(Of String)
+    ReadOnly filePath As String
 
     Public ReadOnly Property NrddHeader As Metadata
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -27,17 +26,17 @@ Public Class FileReader : Implements IDisposable
     Sub New(file As Stream)
         Me.file = file
         Me.header = loadNrrdHeader()
+
+        If TypeOf file Is FileStream Then
+            filePath = DirectCast(file, FileStream).Name
+        End If
     End Sub
 
     Public Function LoadRaster()
         Dim options As Metadata = Nothing
-        Dim bytes As New BinaryDataReader(loadNrrdRawBuffer(options))
+        Dim rawdata = loadNrrdRawBuffer(options)
+        Dim bytes As New BinaryDataReader(BytesBuffer.checkBufferSize(rawdata, options))
         Dim data As Array
-        Dim deltaSize As Integer = BytesBuffer.checkBufferSize(bytes.BaseStream, options)
-
-        If deltaSize <> 0 Then
-            Throw New InvalidDataException($"The required size of the raster data is not matched(delta_size {deltaSize} bytes) with the nrdd sub-stream size!")
-        End If
 
         ' the source stream is loaded from
         ' the nrdd file substream
@@ -49,41 +48,19 @@ Public Class FileReader : Implements IDisposable
     End Function
 
     Private Function loadNrrdRawBuffer(ByRef metadata As Metadata) As MemoryStream
-        Dim size As Integer = file.Length - scan0
+        Dim size As Integer = file.Length - scan0 - 1
         Dim bytes As Byte() = New Byte(size - 1) {}
 
         ' get raster data reader options
         metadata = header.toMetadata
 
-        file.Seek(scan0, SeekOrigin.Begin)
+        file.Seek(scan0 + 1, SeekOrigin.Begin)
         file.Read(bytes, 0, bytes.Length)
-
-        Call bytes.FlushStream("D:\NRRD\test\gzip_test.gz")
 
         Select Case metadata.encoding
             Case Encoding.raw : Return New MemoryStream(bytes)
             Case Encoding.gzip, Encoding.gz
-                ' 创建一个GZip解压流
-                Dim gz As New GZipStream(New MemoryStream(bytes), CompressionMode.Decompress)
-                ' 用一个临时内存流来保存解压数据
-                Dim ms As New MemoryStream
-                ' 缓冲数据
-                Dim buf(99) As Byte, i As Integer = 0
-                ' 不断从流中解压数据
-                While True
-                    i = gz.Read(buf, 0, 100)
-
-                    If i = 0 Then
-                        Exit While
-                    Else
-                        ms.Write(buf, 0, i)
-                    End If
-                End While
-
-                ' 关闭所有的流
-                Call gz.Close()
-
-                Return ms
+                Return bytes.UnGzipStream
             Case Else
                 Throw New NotImplementedException(metadata.encoding)
         End Select
@@ -98,8 +75,11 @@ Public Class FileReader : Implements IDisposable
             .magicNumber = [Enum].Parse(GetType(MagicNumber), magic),
             .metadata = New Dictionary(Of String, String)
         }
+        Dim readSize As New List(Of String)
 
         Do While Not (line = read.ReadLine).StringEmpty
+            Call readSize.Add(line)
+
             If line.First = "#"c Then
                 comments.Add(line)
             Else
@@ -108,7 +88,14 @@ Public Class FileReader : Implements IDisposable
             End If
         Loop
 
-        scan0 = file.Position
+        ' 20230216
+        ' evaluate the actual text offset
+        ' the streamReader has a bug about buffer size
+        ' it could cause the incorrect stream position
+        scan0 = Aggregate str As String
+                In readSize
+                Let chars = str.Length + 2
+                Into Sum(chars)
 
         Return header
     End Function
