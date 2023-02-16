@@ -1,4 +1,4 @@
-# require(NRRD);
+require(NRRD);
 
 setwd(@dir);
 
