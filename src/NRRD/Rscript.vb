@@ -48,4 +48,9 @@ Public Module Rscript
     Public Function GetRaster(nrrd As FileReader) As RasterObject
         Return nrrd.LoadRaster
     End Function
+
+    <ExportAPI("getRasterLayer")>
+    Public Function GetRasterLayer(raster As RasterPointCloud, layer As Integer) As RasterObject
+        Return raster.GetRasterImage(layer)
+    End Function
 End Module

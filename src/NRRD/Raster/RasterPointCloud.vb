@@ -8,6 +8,14 @@ Public Class RasterPointCloud : Inherits RasterObject
 
     Public Property volumn As Double()()()
 
+    Public Function GetRasterImage(i As Integer) As RasterImage
+        Return New RasterImage With {
+            .dimensionSize = dimensionSize.Take(2).ToArray,
+            .grayscale = volumn(i),
+            .metadata = metadata
+        }
+    End Function
+
     Public Shared Function Create(metadata As Metadata, rawdata As Array) As RasterPointCloud
         Dim dimensionSize As Integer() = metadata.sizes
         Dim rawDbls As Double() = CLRVector.asNumeric(rawdata)

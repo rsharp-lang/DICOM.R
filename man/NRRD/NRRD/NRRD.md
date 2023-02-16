@@ -20,3 +20,4 @@
 + [nrrdRead](NRRD/nrrdRead.1) 
 + [metadata](NRRD/metadata.1) 
 + [getRaster](NRRD/getRaster.1) 
++ [getRasterLayer](NRRD/getRasterLayer.1) 
