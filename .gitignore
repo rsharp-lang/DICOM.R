@@ -352,3 +352,4 @@ MigrationBackup/
 .ionide/
 NRRD.zip
 test/gzip_test.zip
+test/raster.csv
