@@ -17,7 +17,9 @@ header = as.list(NRRD::metadata(nrrd));
 raster = NRRD::getRaster(nrrd);
 ```
 
-#### Image rendering
+#### Raster image rendering
+
+![](./test/stent/raster__234.png)
 
 ```r
 require(graphics2D);
@@ -38,4 +40,3 @@ graphics2D::rasterHeatmap(
 dev.off();
 ```
 
-![](./test/stent/raster__234.png)
