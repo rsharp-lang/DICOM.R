@@ -21,3 +21,4 @@
 + [metadata](NRRD/metadata.1) 
 + [getRaster](NRRD/getRaster.1) 
 + [getRasterLayer](NRRD/getRasterLayer.1) 
++ [write.ply](NRRD/write.ply.1) write the NRRD raster data to PLY point cloud model
