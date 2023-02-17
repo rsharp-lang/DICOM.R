@@ -102,6 +102,10 @@ Public Class FileReader : Implements IDisposable
         Return header
     End Function
 
+    Public Overrides Function ToString() As String
+        Return filePath
+    End Function
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then

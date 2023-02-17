@@ -1,4 +1,5 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
@@ -7,6 +8,27 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Public Class RasterPointCloud : Inherits RasterObject
 
     Public Property volumn As Double()()()
+
+    ''' <summary>
+    ''' Convert the NRRD raster data to PLY point cloud model 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Iterator Function GetPointCloud() As IEnumerable(Of PointCloud)
+        For z As Integer = 1 To volumn.Length
+            Dim layer As RasterImage = GetRasterImage(z)
+
+            For i As Integer = 0 To layer.dimensionSize(1) - 1
+                For j As Integer = 0 To layer.dimensionSize(0) - 1
+                    Yield New PointCloud With {
+                        .intensity = layer.grayscale(j)(i),
+                        .x = i,
+                        .y = j,
+                        .z = z
+                    }
+                Next
+            Next
+        Next
+    End Function
 
     Public Function GetRasterImage(i As Integer) As RasterImage
         Return New RasterImage With {

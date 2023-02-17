@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -52,5 +53,26 @@ Public Module Rscript
     <ExportAPI("getRasterLayer")>
     Public Function GetRasterLayer(raster As RasterPointCloud, layer As Integer) As RasterObject
         Return raster.GetRasterImage(layer)
+    End Function
+
+    ''' <summary>
+    ''' write the NRRD raster data to PLY point cloud model 
+    ''' </summary>
+    ''' <param name="raster">A 3 space dimension NRRD raster object</param>
+    ''' <param name="file">file to the ply file target</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.ply")>
+    Public Function writePly(raster As RasterPointCloud, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Return SimplePlyWriter.WriteAsciiText(
+            pointCloud:=raster.GetPointCloud,
+            buffer:=buf.TryCast(Of Stream)
+        )
     End Function
 End Module
