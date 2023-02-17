@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
@@ -53,6 +54,31 @@ Public Module Rscript
     <ExportAPI("getRasterLayer")>
     Public Function GetRasterLayer(raster As RasterPointCloud, layer As Integer) As RasterObject
         Return raster.GetRasterImage(layer)
+    End Function
+
+    <ExportAPI("as.pointCloud")>
+    Public Function toPointCloud(raster As RasterPointCloud) As PointCloud()
+        Return raster.GetPointCloud.ToArray
+    End Function
+
+    <ExportAPI("as.pointMatrix")>
+    Public Function toPointMatrix(raster As RasterPointCloud) As dataframe
+        Dim pointCloud = raster.GetPointCloud.ToArray
+        Dim labels = pointCloud.Select(Function(p) $"[{p.x},{p.y},{p.z}]").ToArray
+        Dim x = pointCloud.Select(Function(p) p.x).ToArray
+        Dim y = pointCloud.Select(Function(p) p.y).ToArray
+        Dim z = pointCloud.Select(Function(p) p.z).ToArray
+        Dim intensity = pointCloud.Select(Function(p) p.intensity).ToArray
+
+        Return New dataframe With {
+            .rownames = labels,
+            .columns = New Dictionary(Of String, Array) From {
+                {"x", x},
+                {"y", y},
+                {"z", z},
+                {"scale", intensity}
+            }
+        }
     End Function
 
     ''' <summary>
