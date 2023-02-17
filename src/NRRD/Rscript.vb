@@ -57,13 +57,13 @@ Public Module Rscript
     End Function
 
     <ExportAPI("as.pointCloud")>
-    Public Function toPointCloud(raster As RasterPointCloud) As PointCloud()
-        Return raster.GetPointCloud.ToArray
+    Public Function toPointCloud(raster As RasterPointCloud, Optional skip_zero As Boolean = True) As PointCloud()
+        Return raster.GetPointCloud(skip_zero).ToArray
     End Function
 
     <ExportAPI("as.pointMatrix")>
-    Public Function toPointMatrix(raster As RasterPointCloud) As dataframe
-        Dim pointCloud = raster.GetPointCloud.ToArray
+    Public Function toPointMatrix(raster As RasterPointCloud, Optional skip_zero As Boolean = True) As dataframe
+        Dim pointCloud = raster.GetPointCloud(skip_zero).ToArray
         Dim labels = pointCloud.Select(Function(p) $"[{p.x},{p.y},{p.z}]").ToArray
         Dim x = pointCloud.Select(Function(p) p.x).ToArray
         Dim y = pointCloud.Select(Function(p) p.y).ToArray
@@ -97,7 +97,7 @@ Public Module Rscript
         End If
 
         Return SimplePlyWriter.WriteAsciiText(
-            pointCloud:=raster.GetPointCloud,
+            pointCloud:=raster.GetPointCloud(skipZero:=True),
             buffer:=buf.TryCast(Of Stream)
         )
     End Function

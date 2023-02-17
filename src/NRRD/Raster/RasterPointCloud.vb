@@ -13,14 +13,22 @@ Public Class RasterPointCloud : Inherits RasterObject
     ''' Convert the NRRD raster data to PLY point cloud model 
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function GetPointCloud() As IEnumerable(Of PointCloud)
+    Public Iterator Function GetPointCloud(skipZero As Boolean) As IEnumerable(Of PointCloud)
+        Dim scale As Double
+
         For z As Integer = 1 To volumn.Length
             Dim layer As RasterImage = GetRasterImage(z)
 
             For i As Integer = 0 To layer.dimensionSize(1) - 1
                 For j As Integer = 0 To layer.dimensionSize(0) - 1
+                    scale = layer.grayscale(j)(i)
+
+                    If skipZero AndAlso scale = 0.0 Then
+                        Continue For
+                    End If
+
                     Yield New PointCloud With {
-                        .intensity = layer.grayscale(j)(i),
+                        .intensity = scale,
                         .x = i,
                         .y = j,
                         .z = z
