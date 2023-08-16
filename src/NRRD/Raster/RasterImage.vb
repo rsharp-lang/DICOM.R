@@ -1,5 +1,6 @@
 ﻿
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
@@ -13,6 +14,10 @@ Public Class RasterImage : Inherits RasterObject
     ''' </summary>
     ''' <returns></returns>
     Public Property grayscale As Double()()
+
+    Public Overrides Function ToString() As String
+        Return $"{dimensionSize.GetJson}"
+    End Function
 
     Public Shared Function Create(metadata As Metadata, rawdata As Array) As RasterImage
         Dim dimensionSize As Integer() = metadata.sizes
