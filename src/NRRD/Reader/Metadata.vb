@@ -4,6 +4,11 @@ Public Class Metadata
 
     Public Property type As Types
     Public Property dimension As Integer
+
+    ''' <summary>
+    ''' the graphics image dimension size
+    ''' </summary>
+    ''' <returns></returns>
     Public Property sizes As Integer()
     Public Property encoding As Encoding
     ''' <summary>
