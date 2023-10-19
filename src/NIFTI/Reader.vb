@@ -25,6 +25,7 @@ Public Class Reader : Implements IDisposable
     End Sub
 
     Public Function LoadHeaders() As Reader
+        headers = New ReaderProvider(file).LoadObject(Of Headers)()
         Return Me
     End Function
 
