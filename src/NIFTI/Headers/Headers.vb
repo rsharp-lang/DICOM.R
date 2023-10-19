@@ -363,6 +363,18 @@ Public Class Headers
     <Field(41, N:=16)> Public Property intent_name As String
     ''' <summary>
     ''' Magic string.
+    ''' 
+    ''' The char magic[4] field is a “magic” string that declares 
+    ''' the file as conforming with the nifti standard. It was 
+    ''' placed at the very end of the header to avoid overwriting 
+    ''' fields that are needed for the analyze format. Ideally, 
+    ''' however, this string should be checked first. It should be 
+    ''' 'ni1' (or '6E 69 31 00' in hexadecimal) for .hdr/.img pair, 
+    ''' or 'n+1' (or '6E 2B 31 00') for a .nii single file. In the 
+    ''' absence of this string, the file should be treated as 
+    ''' analyze. Future versions of the nifti format may increment 
+    ''' the string to 'n+2', 'n+3', etc. Indeed, as of 2012, a second 
+    ''' version is under preparation.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
