@@ -7,6 +7,9 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' 
+''' </summary>
 <Package("NIFTI")>
 Module niftiFile
 
