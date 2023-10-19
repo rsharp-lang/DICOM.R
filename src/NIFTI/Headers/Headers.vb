@@ -23,6 +23,21 @@ Public Class Headers
     ''' </remarks>
     <Field(0)> Public Property sizeof_hdr As Integer
 
+#Region "Not used; compatibility with analyze."
+
+    ' Unused fields
+    '
+    ' The fields char data_type[10], char db_name[18], int extents,
+    ' short session_error and char regular are not used by the nifti
+    ' format, but were included in the header for compatibility
+    ' with analyze.
+    '
+    ' The extents should be the integer 16384, and
+    ' regular should be the character 'r'.
+    ' The fields int glmin and int glmax specify
+    ' respectively the minimum and maximum of the
+    ' entire dataset in the analyze format.
+
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
@@ -63,6 +78,8 @@ Public Class Headers
     ''' 38B	1B
     ''' </remarks>
     <Field(5)> Public Property regular As Char
+
+#End Region
 
     ''' <summary>
     ''' Encoding directions (phase, frequency, slice).
