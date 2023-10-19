@@ -386,9 +386,9 @@ Public Class Headers
         If sizeof_hdr <> 348 Then
             Return "size of header is mis-matched!"
         End If
-        If magic <> "ni1" OrElse
-            magic <> "n+1" OrElse
-            magic <> "n+2" OrElse
+        If magic <> "ni1" AndAlso
+            magic <> "n+1" AndAlso
+            magic <> "n+2" AndAlso
             magic <> "n+3" Then
 
             Return "invalid magic header string!"
