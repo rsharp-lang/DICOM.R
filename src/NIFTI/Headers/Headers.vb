@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+﻿Imports Microsoft.VisualBasic.Data.IO
 
 ''' <summary>
 ''' Overview of the header structure
@@ -27,7 +27,7 @@ Public Class Headers
     ''' <remarks>
     ''' char	data_type[10] offset 4B size 10B
     ''' </remarks>
-    Public Property data_type As String
+    <Field(1, N:=10)> Public Property data_type As String
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
@@ -35,7 +35,7 @@ Public Class Headers
     ''' <remarks>
     ''' char	db_name[18] 14B	18B
     ''' </remarks>
-    Public Property db_name As String
+    <Field(2, N:=18)> Public Property db_name As String
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
@@ -43,7 +43,7 @@ Public Class Headers
     ''' <remarks>
     ''' 32B	4B
     ''' </remarks>
-    Public Property extents As Integer
+    <Field(0)> Public Property extents As Integer
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
@@ -51,7 +51,7 @@ Public Class Headers
     ''' <remarks>
     ''' 36B	2B
     ''' </remarks>
-    Public Property session_error As Short
+    <Field(0)> Public Property session_error As Short
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
@@ -59,7 +59,7 @@ Public Class Headers
     ''' <remarks>
     ''' 38B	1B
     ''' </remarks>
-    Public Property regular As Char
+    <Field(0)> Public Property regular As Char
     ''' <summary>
     ''' Encoding directions (phase, frequency, slice).
     ''' </summary>
@@ -67,7 +67,7 @@ Public Class Headers
     ''' <remarks>
     ''' 39B	1B
     ''' </remarks>
-    Public Property dim_info As dim_info
+    <Field(0)> Public Property dim_info As dim_info
     ''' <summary>
     ''' Data array dimensions.
     ''' </summary>
@@ -75,7 +75,7 @@ Public Class Headers
     ''' <remarks>
     ''' short	dim[8] 40B	16B
     ''' </remarks>
-    Public Property [dim] As Short()
+    <Field(0)> Public Property [dim] As Short()
     ''' <summary>
     ''' 1st intent parameter.
     ''' </summary>
@@ -83,7 +83,7 @@ Public Class Headers
     ''' <remarks>
     ''' 56B	4B
     ''' </remarks>
-    Public Property intent_p1 As Single
+    <Field(0)> Public Property intent_p1 As Single
     ''' <summary>
     ''' 2nd intent parameter.
     ''' </summary>
@@ -91,7 +91,7 @@ Public Class Headers
     ''' <remarks>
     ''' 60B	4B
     ''' </remarks>
-    Public Property intent_p2 As Single
+    <Field(0)> Public Property intent_p2 As Single
     ''' <summary>
     ''' 3rd intent parameter.
     ''' </summary>
@@ -99,7 +99,7 @@ Public Class Headers
     ''' <remarks>
     ''' 64B	4B
     ''' </remarks>
-    Public Property intent_p3 As Single
+    <Field(0)> Public Property intent_p3 As Single
     ''' <summary>
     ''' nifti intent.
     ''' </summary>
@@ -107,7 +107,7 @@ Public Class Headers
     ''' <remarks>
     ''' 68B	2B
     ''' </remarks>
-    Public Property intent_code As Short
+    <Field(0)> Public Property intent_code As Short
     ''' <summary>
     ''' Data type.
     ''' </summary>
@@ -115,7 +115,7 @@ Public Class Headers
     ''' <remarks>
     ''' 70B	2B
     ''' </remarks>
-    Public Property datatype As Short
+    <Field(0)> Public Property datatype As Short
     ''' <summary>
     ''' Number of bits per voxel.
     ''' </summary>
@@ -123,7 +123,7 @@ Public Class Headers
     ''' <remarks>
     ''' 72B	2B
     ''' </remarks>
-    Public Property bitpix As Short
+    <Field(0)> Public Property bitpix As Short
     ''' <summary>
     ''' First slice index.
     ''' </summary>
@@ -131,7 +131,7 @@ Public Class Headers
     ''' <remarks>
     ''' 74B	2B
     ''' </remarks>
-    Public Property slice_start As Short
+    <Field(0)> Public Property slice_start As Short
     ''' <summary>
     ''' Grid spacings (unit per dimension).
     ''' </summary>
@@ -139,7 +139,7 @@ Public Class Headers
     ''' <remarks>
     ''' float	pixdim[8]	76B	32B
     ''' </remarks>
-    Public Property pixdim As Single()
+    <Field(0)> Public Property pixdim As Single()
     ''' <summary>
     ''' Offset into a .nii file.
     ''' </summary>
@@ -147,7 +147,7 @@ Public Class Headers
     ''' <remarks>
     ''' 108B	4B
     ''' </remarks>
-    Public Property vox_offset As Single
+    <Field(0)> Public Property vox_offset As Single
     ''' <summary>
     ''' Data scaling, slope.
     ''' </summary>
@@ -155,7 +155,7 @@ Public Class Headers
     ''' <remarks>
     ''' 112B	4B
     ''' </remarks>
-    Public Property scl_slope As Single
+    <Field(0)> Public Property scl_slope As Single
     ''' <summary>
     ''' Data scaling, offset.
     ''' </summary>
@@ -163,7 +163,7 @@ Public Class Headers
     ''' <remarks>
     ''' 116B	4B
     ''' </remarks>
-    Public Property scl_inter As Single
+    <Field(0)> Public Property scl_inter As Single
     ''' <summary>
     ''' Last slice index.
     ''' </summary>
@@ -171,7 +171,7 @@ Public Class Headers
     ''' <remarks>
     ''' 120B	2B
     ''' </remarks>
-    Public Property slice_end As Short
+    <Field(0)> Public Property slice_end As Short
     ''' <summary>
     ''' Slice timing order.
     ''' </summary>
@@ -179,7 +179,7 @@ Public Class Headers
     ''' <remarks>
     ''' 122B	1B
     ''' </remarks>
-    Public Property slice_code As Char
+    <Field(0)> Public Property slice_code As Char
     ''' <summary>
     ''' Units of pixdim[1..4].
     ''' </summary>
@@ -187,43 +187,43 @@ Public Class Headers
     ''' <remarks>
     ''' 123B	1B
     ''' </remarks>
-    Public Property xyzt_units As Char
+    <Field(0)> Public Property xyzt_units As Char
     ''' <summary>
     ''' Maximum display intensity.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>124B	4B</remarks>
-    Public Property cal_max As Single
+    <Field(0)> Public Property cal_max As Single
     ''' <summary>
     ''' Minimum display intensity.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>128B	4B</remarks>
-    Public Property cal_min As Single
+    <Field(0)> Public Property cal_min As Single
     ''' <summary>
     ''' Time for one slice.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>132B	4B</remarks>
-    Public Property slice_duration As Single
+    <Field(0)> Public Property slice_duration As Single
     ''' <summary>
     ''' Time axis shift.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>136B	4B</remarks>
-    Public Property toffset As Single
+    <Field(0)> Public Property toffset As Single
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>140B	4B</remarks>
-    Public Property glmax As Integer
+    <Field(0)> Public Property glmax As Integer
     ''' <summary>
     ''' Not used; compatibility with analyze.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>144B	4B</remarks>
-    Public Property glmin As Integer
+    <Field(0)> Public Property glmin As Integer
     ''' <summary>
     ''' Any text.
     ''' </summary>
@@ -231,7 +231,7 @@ Public Class Headers
     ''' <remarks>
     ''' char	descrip[80]	148B	80B
     ''' </remarks>
-    Public Property descrip As String
+    <Field(0)> Public Property descrip As String
     ''' <summary>
     ''' Auxiliary filename.
     ''' </summary>
@@ -239,7 +239,7 @@ Public Class Headers
     ''' <remarks>
     ''' char	aux_file[24]	228B	24B
     ''' </remarks>
-    Public Property aux_file As String
+    <Field(0)> Public Property aux_file As String
     ''' <summary>
     ''' Use the quaternion fields.
     ''' </summary>
@@ -247,13 +247,13 @@ Public Class Headers
     ''' <remarks>
     ''' 252B	2B
     ''' </remarks>
-    Public Property qform_code As Short
+    <Field(0)> Public Property qform_code As Short
     ''' <summary>
     ''' Use of the affine fields.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>254B	2B</remarks>
-    Public Property sform_code As Short
+    <Field(0)> Public Property sform_code As Short
     ''' <summary>
     ''' Quaternion b parameter.
     ''' </summary>
@@ -261,7 +261,7 @@ Public Class Headers
     ''' <remarks>
     ''' 256B	4B
     ''' </remarks>
-    Public Property quatern_b As Single
+    <Field(0)> Public Property quatern_b As Single
     ''' <summary>
     ''' Quaternion c parameter.
     ''' </summary>
@@ -269,31 +269,31 @@ Public Class Headers
     ''' <remarks>
     ''' 260B	4B
     ''' </remarks>
-    Public Property quatern_c As Single
+    <Field(0)> Public Property quatern_c As Single
     ''' <summary>
     ''' Quaternion d parameter.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>264B	4B</remarks>
-    Public Property quatern_d As Single
+    <Field(0)> Public Property quatern_d As Single
     ''' <summary>
     ''' Quaternion x shift.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>268B	4B</remarks>
-    Public Property qoffset_x As Single
+    <Field(0)> Public Property qoffset_x As Single
     ''' <summary>
     ''' Quaternion y shift.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>272B	4B</remarks>
-    Public Property qoffset_y As Single
+    <Field(0)> Public Property qoffset_y As Single
     ''' <summary>
     ''' Quaternion z shift.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>276B	4B</remarks>
-    Public Property qoffset_z As Single
+    <Field(0)> Public Property qoffset_z As Single
     ''' <summary>
     ''' 1st row affine transform
     ''' </summary>
@@ -301,7 +301,7 @@ Public Class Headers
     ''' <remarks>
     ''' float	srow_x[4]	280B	16B
     ''' </remarks>
-    Public Property srow_x As Single()
+    <Field(0)> Public Property srow_x As Single()
     ''' <summary>
     ''' 2nd row affine transform.
     ''' </summary>
@@ -309,7 +309,7 @@ Public Class Headers
     ''' <remarks>
     ''' float	srow_y[4]	296B	16B
     ''' </remarks>
-    Public Property srow_y As Single()
+    <Field(0)> Public Property srow_y As Single()
     ''' <summary>
     ''' 3rd row affine transform.
     ''' </summary>
@@ -317,7 +317,7 @@ Public Class Headers
     ''' <remarks>
     ''' float	srow_z[4]	312B	16B
     ''' </remarks>
-    Public Property srow_z As Single()
+    <Field(0)> Public Property srow_z As Single()
     ''' <summary>
     ''' Name or meaning of the data.
     ''' </summary>
@@ -325,7 +325,7 @@ Public Class Headers
     ''' <remarks>
     ''' char	intent_name[16]	328B	16B
     ''' </remarks>
-    Public Property intent_name As String
+    <Field(0)> Public Property intent_name As String
     ''' <summary>
     ''' Magic string.
     ''' </summary>
@@ -333,7 +333,7 @@ Public Class Headers
     ''' <remarks>
     ''' char	magic[4]	344B	4B
     ''' </remarks>
-    Public Property magic As String
+    <Field(0)> Public Property magic As String
 
 End Class
 
