@@ -25,6 +25,6 @@ Module niftiFile
             Return buf.TryCast(Of Message)
         End If
 
-        Return New Reader(buf.TryCast(Of Stream))
+        Return New Reader(buf.TryCast(Of Stream)).LoadHeaders
     End Function
 End Module
