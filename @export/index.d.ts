@@ -1,8 +1,8 @@
 ﻿// export R# source type define for javascript/typescript language
 //
-// package_source=NRRD
+// package_source=DICOM
 
-declare namespace NRRD {
+declare namespace DICOM {
    module _ {
       /**
       */

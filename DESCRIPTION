@@ -1,16 +1,16 @@
-Package: NRRD
+Package: DICOM
 Type: Package
-Title: VisualBasic.NET function port to R
+Title: DICOM image data processor for ``R#`` language
 Version: 1.0.148
 Author: xieguigang <xie.guigang@gcmodeller.org>
 Maintainer: xieguigang <xie.guigang@gcmodeller.org>
-Description: This package provides some common programming feature in VB.NET
-    to R language, these includes,
-    1. Syntax tweaks for R language
-    2. Linq like common data operation for R
-    3. Common string helper functions
-    4. R Package development tools
-    5. File format helper tools, like XML.
+Description: Digital Imaging and Communications in Medicine (DICOM) is the standard 
+   for the communication and management of medical imaging information and related data. 
+   DICOM is most commonly used for storing and transmitting medical images enabling 
+   the integration of medical imaging devices such as scanners, servers, workstations,
+   printers, network hardware, and picture archiving and communication systems (PACS) 
+   from multiple manufacturers. It has been widely adopted by hospitals and is making 
+   inroads into smaller applications such as dentists' and doctors' offices.
 License: MIT License
 Encoding: UTF-8
 LazyData: true
