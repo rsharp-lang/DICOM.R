@@ -1,4 +1,4 @@
-imports "NRRD" from "NRRD";
+imports ["NRRD", ""] from "DICOM";
 
 const .onLoad = function() {
     
