@@ -8,6 +8,7 @@ Public Class Reader : Implements IDisposable
 
     Public ReadOnly Property headers As Headers
 
+    Dim _msg As String
     Dim disposedValue As Boolean
 
     Sub New(file As BinaryDataReader)
@@ -26,12 +27,18 @@ Public Class Reader : Implements IDisposable
 
     Public Function LoadHeaders() As Reader
         _headers = New ReaderProvider(file).LoadObject(Of Headers)(offset:=0)
+        _msg = _headers.Validate
+
         Return Me
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"{file.BaseStream}: {_msg}"
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
-            If disposing Then              
+            If disposing Then
                 Call file.Dispose()
             End If
 

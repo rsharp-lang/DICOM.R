@@ -382,6 +382,20 @@ Public Class Headers
     ''' </remarks>
     <Field(42, N:=4)> Public Property magic As String
 
+    Public Function Validate() As String
+        If sizeof_hdr <> 348 Then
+            Return "size of header is mis-matched!"
+        End If
+        If magic <> "ni1" OrElse
+            magic <> "n+1" OrElse
+            magic <> "n+2" OrElse
+            magic <> "n+3" Then
+
+            Return "invalid magic header string!"
+        End If
+
+        Return Nothing
+    End Function
 End Class
 
 Public Enum dim_info As Byte
