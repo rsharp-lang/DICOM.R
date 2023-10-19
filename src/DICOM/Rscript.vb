@@ -26,7 +26,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' resampling (up and down) with arbitrary seperable kernels.
 ''' </summary>
 <Package("NRRD")>
-Public Module Rscript
+Public Module nrrdFile
 
     <ExportAPI("nrrdRead")>
     <RApiReturn(GetType(FileReader))>
