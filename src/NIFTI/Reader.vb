@@ -75,7 +75,7 @@ Public Class Reader : Implements IDisposable
         _msg = _headers.Validate
 
         If ext = ".nii" Then
-
+            _extra = file.ReadBytes(4)
         End If
 
         Return Me
