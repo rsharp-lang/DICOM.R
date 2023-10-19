@@ -1,4 +1,5 @@
-﻿
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+
 ''' <summary>
 ''' Overview of the header structure
 ''' 
@@ -17,7 +18,7 @@ Public Class Headers
     ''' <remarks>
     ''' offset 0B size 4B 
     ''' </remarks>
-    Public Property sizeof_hdr As Integer
+    <Field(0)> Public Property sizeof_hdr As Integer
 
     ''' <summary>
     ''' Not used; compatibility with analyze.
