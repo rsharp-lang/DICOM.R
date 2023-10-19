@@ -13,6 +13,9 @@ Public Class Headers
 
     ''' <summary>
     ''' Size of the header. Must be 348 (bytes).
+    ''' 
+    ''' The field int sizeof_hdr stores the size of the header. 
+    ''' It must be 348 for a nifti or analyze format.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
@@ -60,16 +63,38 @@ Public Class Headers
     ''' 38B	1B
     ''' </remarks>
     <Field(5)> Public Property regular As Char
+
     ''' <summary>
     ''' Encoding directions (phase, frequency, slice).
+    ''' 
+    ''' The field char dim_info stores, in just one byte, the frequency 
+    ''' encoding direction (1, 2 or 3), the phase encoding direction 
+    ''' (1, 2 or 3), and the direction in which the volume was sliced 
+    ''' during the acquisition (1, 2 or 3). For spiral sequences, frequency 
+    ''' and phase encoding are both set as 0. The reason to collapse all
+    ''' this information in just one byte was to save space. See also 
+    ''' the fields short slice_start, short slice_end, char slice_code 
+    ''' and float slice_duration.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
     ''' 39B	1B
     ''' </remarks>
-    <Field(6)> Public Property dim_info As dim_info
+    <Field(6)> Public Property dim_info As Char
     ''' <summary>
     ''' Data array dimensions.
+    ''' 
+    ''' Image dimensions
+    ''' 
+    ''' The field Short Dim[8] contains the size Of the image array. The first 
+    ''' element (Dim[0]) contains the number Of dimensions (1-7). If Dim[0] Is 
+    ''' Not In this interval, the data Is assumed To have opposite endianness And 
+    ''' so, should be Byte-swapped (the nifti standard does Not specify a 
+    ''' specific field For endianness, but encourages the use Of Dim[0] For this 
+    ''' purpose). The dimensions 1, 2 And 3 are assumed To refer To space (x, y, z), 
+    ''' the 4th dimension Is assumed To refer To time, And the remaining 
+    ''' dimensions, 5, 6 And 7, can be anything Else. The value Dim[i] Is a 
+    ''' positive Integer representing the length Of the i-th dimension.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
@@ -102,6 +127,14 @@ Public Class Headers
     <Field(10)> Public Property intent_p3 As Single
     ''' <summary>
     ''' nifti intent.
+    ''' 
+    ''' Intent
+    ''' The short intent_code Is an integer that codifies that the data
+    ''' Is supposed to contain. Some of these codes require extra-parameters, 
+    ''' such as the number of degrees of freedom (df). These extra 
+    ''' parameters, when needed, can be stored in the fields ``intent_p*`` 
+    ''' when they can be applied to the image as a while, Or in the 
+    ''' 5th dimension if voxelwise.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
@@ -110,12 +143,14 @@ Public Class Headers
     <Field(11)> Public Property intent_code As Short
     ''' <summary>
     ''' Data type.
+    ''' 
+    ''' The field int datatype indicates the type of the data stored.
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
     ''' 70B	2B
     ''' </remarks>
-    <Field(12)> Public Property datatype As Short
+    <Field(12)> Public Property datatype As DataTypes
     ''' <summary>
     ''' Number of bits per voxel.
     ''' </summary>
@@ -338,7 +373,7 @@ Public Class Headers
 End Class
 
 Public Enum dim_info As Byte
-    phase
+    phase = 1
     frequency
     slice
 End Enum
