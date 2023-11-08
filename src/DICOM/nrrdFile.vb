@@ -1,7 +1,10 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.IO
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports NRRD
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -101,5 +104,29 @@ Public Module nrrdFile
             pointCloud:=raster.GetPointCloud(skipZero:=True),
             buffer:=buf.TryCast(Of Stream)
         )
+    End Function
+
+    <ExportAPI("write.nrrd")>
+    Public Function writeNrrd(file As Object, <RRawVectorArgument> rasters As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+#Disable Warning
+        Dim imgs = pipeline.TryCreatePipeline(Of Image)(rasters, env)
+
+        If imgs.isError Then
+            Return imgs.getError
+        End If
+
+        Dim imgList As Image() = imgs.populates(Of Image)(env).ToArray
+        Dim dimSize As Size = imgList(0).Size
+#Enable Warning
+        Using s As Stream = buf.TryCast(Of Stream)
+            FileWriter.WriteFile(New BinaryDataWriter(s, Encodings.ASCII), dimSize, imgList)
+        End Using
+
+        Return True
     End Function
 End Module
