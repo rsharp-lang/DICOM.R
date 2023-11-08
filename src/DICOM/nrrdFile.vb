@@ -122,6 +122,10 @@ Public Module nrrdFile
 
         Dim imgList As Image() = imgs.populates(Of Image)(env).ToArray
         Dim dimSize As Size = imgList(0).Size
+
+        ' matrix needs reverse for keeps the right order
+        dimSize = New Size(dimSize.Height, dimSize.Width)
+
 #Enable Warning
         Using s As Stream = buf.TryCast(Of Stream)
             FileWriter.WriteFile(New BinaryDataWriter(s, Encodings.ASCII), dimSize, imgList)
