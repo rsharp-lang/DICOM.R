@@ -1,7 +1,9 @@
 require(DICOM);
 require(graphics2D);
 
-nrrd = NRRD::nrrdRead("..\\data\\stent.nrrd");
+setwd(@dir);
+
+nrrd = NRRD::nrrdRead("../data/brain1_image.nrrd");
 header = as.list(NRRD::metadata(nrrd));
 raster = NRRD::getRaster(nrrd);
 
