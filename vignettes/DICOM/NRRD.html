@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; NRRD; DICOM" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="..." />
+    <meta name="description" content="Nearly Raw Raster Data Nrrd is a library and file format designe..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,10 +63,25 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">DICOM</span>);
-                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "NRRD"</span><span style="color: blue;"> from</span><span style="color: brown"> "DICOM"</span>;
+                               <br /><br /><span style="color: green;">#' Nearly Raw Raster Data</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "NRRD"</span><span style="color: blue;"> from</span><span style="color: brown"> "DICOM"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><h2>Nearly Raw Raster Data</h2>
+
+<p>Nrrd is a library and file format designed to support scientific <br />
+ visualization and image processing involving N-dimensional raster <br />
+ data. Nrrd stands for "nearly raw raster data". Besides dimensional<br />
+ generality, nrrd is flexible with respect to type (8 integral <br />
+ types, 2 floating point types), encoding of written files (raw, <br />
+ ascii, hex, or gzip or bzip2 compression), and endianness (the byte <br />
+ order of data is explicitly recorded when the type or encoding expose<br />
+ it). Besides the NRRD format, the library can read and write PNG, PPM, <br />
+ and PGM images, as well as some VTK "STRUCTURED_POINTS" datasets. </p>
+
+<p>About two dozen operations on raster data are implemented, including<br />
+ simple things like quantizing, slicing, and cropping, as well as <br />
+ fancier things like projection, histogram equalization, and filtered<br />
+ resampling (up and down) with arbitrary seperable kernels.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
@@ -114,7 +129,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="write.ply">
     <a href="./NRRD/write.ply.html">write.ply</a>
   </td>
-  <td></td>
+  <td><p>write the NRRD raster data to PLY point cloud model</p></td>
 </tr></tbody>
       </table>
     </div>
