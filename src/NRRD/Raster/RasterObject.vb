@@ -12,4 +12,8 @@
             Throw New NotImplementedException
         End If
     End Function
+
+    Public Shared Function CastPointCloud(img As RasterImage) As RasterObject
+
+    End Function
 End Class

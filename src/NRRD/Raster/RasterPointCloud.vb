@@ -38,6 +38,11 @@ Public Class RasterPointCloud : Inherits RasterObject
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="i">1 based offset value</param>
+    ''' <returns></returns>
     Public Function GetRasterImage(i As Integer) As RasterImage
         Return New RasterImage With {
             .dimensionSize = dimensionSize.Take(2).ToArray,

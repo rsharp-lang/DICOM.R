@@ -1,4 +1,6 @@
 ﻿
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -15,6 +17,13 @@ Public Class RasterImage : Inherits RasterObject
     ''' </summary>
     ''' <returns></returns>
     Public Property grayscale As Double()()
+
+    Public ReadOnly Property RawSize As Size
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return New Size(dimensionSize(0), dimensionSize(1))
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return $"{dimensionSize.GetJson}"
