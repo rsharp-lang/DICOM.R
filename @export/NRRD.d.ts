@@ -49,6 +49,10 @@ declare namespace NRRD {
    function nrrdRead(file: any, env?: object): object;
    module write {
       /**
+        * @param env default value Is ``null``.
+      */
+      function nrrd(file: any, rasters: any, env?: object): any;
+      /**
        * write the NRRD raster data to PLY point cloud model
        * 
        * 
