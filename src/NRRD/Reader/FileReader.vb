@@ -13,6 +13,8 @@ Public Class FileReader : Implements IDisposable
     ReadOnly comments As New List(Of String)
     ReadOnly filePath As String
 
+    Public Const MagicBytes As String = "NRRD0004"
+
     Public ReadOnly Property NrddHeader As Metadata
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
