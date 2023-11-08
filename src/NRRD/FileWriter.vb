@@ -24,7 +24,7 @@ Public Module FileWriter
 
         For Each image As Image In rasters
             Dim buffer As BitmapBuffer = BitmapBuffer.FromImage(image)
-            Dim colors As Color() = buffer.GetPixelsAll
+            Dim colors As Color() = buffer.GetPixelsAll.ToArray
             Dim intensity As Single() = colors.Select(Function(c) CSng(c.GrayScale)).ToArray
 
             Call file.Write(intensity)
