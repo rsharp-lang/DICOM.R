@@ -1,10 +1,10 @@
-require(NRRD);
+require(DICOM);
 require(graphics2D);
 
 setwd(@dir);
 
-nrrd = NRRD::nrrdRead("..\data\foolf.nrrd");
-header = as.list(NRRD::metadata(nrrd));
+const nrrd = NRRD::nrrdRead("../data/brain1_image.nrrd");
+const header = as.list(NRRD::metadata(nrrd));
 
 str(header);
 
