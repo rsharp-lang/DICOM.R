@@ -353,3 +353,4 @@ MigrationBackup/
 NRRD.zip
 test/gzip_test.zip
 test/raster.csv
+data/mouseBrain.nrrd
