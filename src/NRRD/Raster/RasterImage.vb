@@ -46,10 +46,14 @@ Public Class RasterImage : Inherits RasterObject
     End Function
 
     Public Iterator Function GetRasterPixels() As IEnumerable(Of Pixel) Implements IRasterGrayscaleHeatmap.GetRasterPixels
+        Dim row As Double()
+
         For i As Integer = 0 To dimensionSize(1) - 1
             For j As Integer = 0 To dimensionSize(0) - 1
+                row = grayscale(j)
+
                 Yield New PixelData With {
-                    .Scale = grayscale(j)(i),
+                    .Scale = row(i),
                     .X = i,
                     .Y = j
                 }
