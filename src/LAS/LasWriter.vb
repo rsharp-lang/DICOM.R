@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports SMRUCC.DICOM.LASer.Model
@@ -28,7 +29,28 @@ Public Class LasWriter : Implements IDisposable
     Public Const software As String = "DICOM/LASer@SMRUCC"
     Public Const Magic As String = "LASF"
 
-    Public Sub New(lasfile As String,
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(lasfile As String,
+            Optional xScale As Double = 0.0001,
+            Optional yScale As Double = 0.0001,
+            Optional zScale As Double = 0.0001,
+            Optional xOffset As Double = 0,
+            Optional yOffset As Double = 0,
+            Optional zOffset As Double = 0,
+            Optional versionMajor As Byte = 1,
+            Optional versionMinor As Byte = 1,
+            Optional pointDataFormat As Byte = 1)
+
+        Call Me.New(
+            lasfile:=lasfile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False),
+            xScale:=xScale, yScale:=yScale, zScale:=zScale,
+            xOffset:=xOffset, yOffset:=yOffset, zOffset:=zOffset,
+            versionMajor:=versionMajor, versionMinor:=versionMinor,
+            pointDataFormat:=pointDataFormat
+        )
+    End Sub
+
+    Public Sub New(lasfile As Stream,
                    Optional xScale As Double = 0.0001,
                    Optional yScale As Double = 0.0001,
                    Optional zScale As Double = 0.0001,
@@ -49,8 +71,6 @@ Public Class LasWriter : Implements IDisposable
             Throw New Exception("given pointDataFormat is not supported yet")
         End If
 
-        Dim s As Stream = lasfile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-
         _xScale = xScale
         _yScale = yScale
         _zScale = zScale
@@ -62,7 +82,7 @@ Public Class LasWriter : Implements IDisposable
 
         Me.pointDataFormat = pointDataFormat
 
-        binaryWriter = New BinaryWriter(s, Encoding.ASCII)
+        binaryWriter = New BinaryWriter(lasfile, Encoding.ASCII)
         binaryWriter.Write(Encoding.ASCII.GetBytes(Magic))
 
         ' write the place holder

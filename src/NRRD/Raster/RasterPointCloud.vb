@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
@@ -9,11 +11,16 @@ Public Class RasterPointCloud : Inherits RasterObject
 
     Public Property volumn As Double()()()
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetPlyData(skipZero As Boolean) As IEnumerable(Of PointCloud)
+        Return GetPointCloud(Of PointCloud)(skipZero)
+    End Function
+
     ''' <summary>
     ''' Convert the NRRD raster data to PLY point cloud model 
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function GetPointCloud(skipZero As Boolean) As IEnumerable(Of PointCloud)
+    Public Iterator Function GetPointCloud(Of T As {New, IPointCloud})(skipZero As Boolean) As IEnumerable(Of T)
         Dim scale As Double
 
         For z As Integer = 1 To volumn.Length
@@ -27,11 +34,11 @@ Public Class RasterPointCloud : Inherits RasterObject
                         Continue For
                     End If
 
-                    Yield New PointCloud With {
+                    Yield New T With {
                         .intensity = scale,
-                        .x = i,
-                        .y = j,
-                        .z = z
+                        .X = i,
+                        .Y = j,
+                        .Z = z
                     }
                 Next
             Next

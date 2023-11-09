@@ -1,4 +1,5 @@
 ﻿
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -7,11 +8,17 @@ Imports SMRUCC.DICOM.LASer
 Imports SMRUCC.DICOM.LASer.Model
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Package("LASer")>
 Module LASerFile
 
+    ''' <summary>
+    ''' Open the file read to the specific las file
+    ''' </summary>
+    ''' <param name="lasfile"></param>
+    ''' <returns></returns>
     <ExportAPI("open")>
     Public Function open(lasfile As String) As Object
         Return New LasReader(lasfile)
@@ -47,8 +54,39 @@ Module LASerFile
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Private Iterator Function getRaster(raster As RasterPointCloud) As IEnumerable(Of LasPoint)
+    Private Function getRaster(raster As RasterPointCloud) As IEnumerable(Of LasPoint)
+        Return raster.GetPointCloud(Of LasPoint)(skipZero:=True)
+    End Function
 
+    <ExportAPI("write.las")>
+    Public Function writeLas(<RRawVectorArgument> raster As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        If TypeOf raster Is RasterPointCloud Then
+            raster = DirectCast(raster, RasterPointCloud).GetPointCloud(Of LasPoint)(skipZero:=True).ToArray
+        End If
+
+        Dim pointcloud As pipeline = pipeline.TryCreatePipeline(Of LasPoint)(raster, env)
+
+        If pointcloud.isError Then
+            Return pointcloud.getError
+        End If
+
+        Dim save As New LasWriter(buf.TryCast(Of Stream))
+
+        For Each point As LasPoint In pointcloud.populates(Of LasPoint)(env)
+            Call save.WritePoint(point)
+        Next
+
+        Call save.Flush()
+        Call save.Dispose()
+
+        Return True
     End Function
 End Module
