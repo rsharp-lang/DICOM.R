@@ -62,12 +62,12 @@ Public Module nrrdFile
 
     <ExportAPI("as.pointCloud")>
     Public Function toPointCloud(raster As RasterPointCloud, Optional skip_zero As Boolean = True) As PointCloud()
-        Return raster.GetPointCloud(skip_zero).ToArray
+        Return raster.GetPointCloud(Of PointCloud)(skip_zero).ToArray
     End Function
 
     <ExportAPI("as.pointMatrix")>
     Public Function toPointMatrix(raster As RasterPointCloud, Optional skip_zero As Boolean = True) As dataframe
-        Dim pointCloud = raster.GetPointCloud(skip_zero).ToArray
+        Dim pointCloud = raster.GetPointCloud(Of PointCloud)(skip_zero).ToArray
         Dim labels = pointCloud.Select(Function(p) $"[{p.x},{p.y},{p.z}]").ToArray
         Dim x = pointCloud.Select(Function(p) p.x).ToArray
         Dim y = pointCloud.Select(Function(p) p.y).ToArray
@@ -101,7 +101,7 @@ Public Module nrrdFile
         End If
 
         Return SimplePlyWriter.WriteAsciiText(
-            pointCloud:=raster.GetPointCloud(skipZero:=True),
+            pointCloud:=raster.GetPointCloud(Of PointCloud)(skipZero:=True),
             buffer:=buf.TryCast(Of Stream)
         )
     End Function
