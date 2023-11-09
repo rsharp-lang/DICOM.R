@@ -15,6 +15,10 @@ Public Class LasWriter : Implements IDisposable
     ReadOnly _versionMajor As Byte
     ReadOnly _versionMinor As Byte
 
+    ''' <summary>
+    ''' Point Data Format ID: The point data format ID corresponds to the point data record format 
+    ''' type. LAS 1.2 defines types 0, 1, 2 And 3.
+    ''' </summary>
     ReadOnly pointDataFormat As Byte
 
     Dim binaryWriter As BinaryWriter
@@ -27,9 +31,20 @@ Public Class LasWriter : Implements IDisposable
     Dim disposedValue As Boolean
 
     ''' <summary>
+    ''' Generating Software: This information is ASCII data describing the generating software itself. 
+    ''' This field provides a mechanism For specifying which generating software package And version 
+    ''' was used during LAS file creation (e.g. “TerraScan V-10.8”, “REALM V-4.2” And etc.). If the 
+    ''' character data Is less than 16 characters, the remaining data must be null.
+    '''
     ''' 32 bytes
     ''' </summary>
     Public Const software As String = "DICOM/LASer@SMRUCC              "
+
+    ''' <summary>
+    ''' The file signature must contain the four characters “LASF”, and it is required by 
+    ''' the LAS specification. These four characters can be checked by user software As a quick look 
+    ''' initial determination Of file type.
+    ''' </summary>
     Public Const Magic As String = "LASF"
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -184,9 +199,19 @@ Public Class LasWriter : Implements IDisposable
         binaryWriter.Write(lasPoint.userdata)
         binaryWriter.Write(lasPoint.pointSourceID)
 
-        If pointDataFormat = 1 Then
-            binaryWriter.Write(lasPoint.GPSTime)
-        End If
+        Select Case pointDataFormat
+            Case 1
+                binaryWriter.Write(lasPoint.GPSTime)
+            Case 2
+                binaryWriter.Write(CUShort(lasPoint.rgb.R))
+                binaryWriter.Write(CUShort(lasPoint.rgb.G))
+                binaryWriter.Write(CUShort(lasPoint.rgb.B))
+            Case 3
+                binaryWriter.Write(lasPoint.GPSTime)
+                binaryWriter.Write(CUShort(lasPoint.rgb.R))
+                binaryWriter.Write(CUShort(lasPoint.rgb.G))
+                binaryWriter.Write(CUShort(lasPoint.rgb.B))
+        End Select
     End Sub
 
     ''' <summary>

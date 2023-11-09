@@ -1,17 +1,40 @@
-﻿Imports System.IO
-Imports SMRUCC.DICOM.Laser.Model
+﻿Imports System.Drawing
+Imports System.IO
+Imports SMRUCC.DICOM.LASer.Model
 
 Public Class LasReader : Implements IDisposable
 
+    ''' <summary>
+    ''' Point Data Format ID: The point data format ID corresponds to the point data record format 
+    ''' type. LAS 1.2 defines types 0, 1, 2 And 3.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property PointDataFormat As Byte
 
     Public ReadOnly Property HeaderSize As UShort
     Public ReadOnly Property FileCreationYear As UShort
     Public ReadOnly Property FileCreationDayOfYear As UShort
     Public ReadOnly Property GeneratingSoftware As Char()
+    ''' <summary>
+    ''' Project ID - GUID data 4
+    ''' 8 chars
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GuidData4 As Char()
+    ''' <summary>
+    ''' Project ID - GUID data 3
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GuidData3 As UShort
+    ''' <summary>
+    ''' Project ID - GUID data 2
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GuidData2 As UShort
+    ''' <summary>
+    ''' Project ID - GUID data 1
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GuidData1 As UInteger
 
     ''' <summary>
@@ -61,6 +84,9 @@ Public Class LasReader : Implements IDisposable
         reader.BaseStream.Seek(8, SeekOrigin.Begin)
     End Sub
 
+    ''' <summary>
+    ''' read for PUBLIC HEADER BLOCK
+    ''' </summary>
     Private Sub ParseHeaders()
         _GuidData1 = reader.ReadUInt32()
         _GuidData2 = reader.ReadUInt16()
@@ -122,10 +148,26 @@ Public Class LasReader : Implements IDisposable
         Dim userData As Byte = reader.ReadByte()
         Dim pointSourceId As UShort = reader.ReadUInt16()
         Dim gpsTime As Double = 0
+        Dim rgb As Color
 
-        If PointDataFormat = 1 Then
-            gpsTime = reader.ReadDouble()
-        End If
+        Select Case PointDataFormat
+            Case 1
+                gpsTime = reader.ReadDouble()
+            Case 2
+                ' rgb
+                rgb = Color.FromArgb(
+                    reader.ReadUInt16,
+                    reader.ReadUInt16,
+                    reader.ReadUInt16
+                )
+            Case 3
+                gpsTime = reader.ReadDouble
+                rgb = Color.FromArgb(
+                    reader.ReadUInt16,
+                    reader.ReadUInt16,
+                    reader.ReadUInt16
+                )
+        End Select
 
         Return New LasPoint() With {
             .intensity = i,
@@ -137,7 +179,8 @@ Public Class LasReader : Implements IDisposable
             .userdata = userData,
             .GPSTime = gpsTime,
             .pointSourceID = pointSourceId,
-            .scanFlag = flag
+            .scanFlag = flag,
+            .rgb = rgb
         }
     End Function
 
