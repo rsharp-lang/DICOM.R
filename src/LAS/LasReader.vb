@@ -142,7 +142,7 @@ Public Class LasReader : Implements IDisposable
     End Function
 
     Public Iterator Function ReadAll() As IEnumerable(Of LasPoint)
-        currentPointIndex = 0
+        Call Reset()
 
         For i As Integer = 1 To NumberOfPoints
             Yield ReadNextPoint()

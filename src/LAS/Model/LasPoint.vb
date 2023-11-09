@@ -28,7 +28,16 @@ Namespace Model
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Dim metadata As New Dictionary(Of String, Double) From {
+                {NameOf(scanFlag), scanFlag},
+                {NameOf([class]), [class]},
+                {NameOf(scanAngleRank), scanAngleRank},
+                {NameOf(userdata), userdata},
+                {NameOf(pointSourceID), pointSourceID},
+                {NameOf(GPSTime), GPSTime}
+            }
+
+            Return $"[{X},{Y},{Z}] {intensity} {metadata.GetJson}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
