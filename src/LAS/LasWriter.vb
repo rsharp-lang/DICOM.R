@@ -26,7 +26,7 @@ Public Class LasWriter : Implements IDisposable
     Dim numberofpoints As Integer = 0
     Dim disposedValue As Boolean
 
-    Public Const software As String = "DICOM/LASer@SMRUCC"
+    Public Const software As String = "DICOM/LASer@SMRUCC             "
     Public Const Magic As String = "LASF"
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -112,10 +112,10 @@ Public Class LasWriter : Implements IDisposable
         binaryWriter.Write(prjidGuid1)
         binaryWriter.Write(prjidGuid2)
         binaryWriter.Write(prjidGuid3)
-        binaryWriter.Write(prjidGuid4)
+        binaryWriter.Write(prjidGuid4.ToArray)
         binaryWriter.Write(_versionMajor)
         binaryWriter.Write(_versionMinor)
-        binaryWriter.Write(systemIdentifier)
+        binaryWriter.Write(systemIdentifier.ToArray)
         binaryWriter.Write(software)
         binaryWriter.Write(fileCreationDayOfYear)
         binaryWriter.Write(fileCreationYear)
