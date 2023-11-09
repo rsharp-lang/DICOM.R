@@ -68,6 +68,19 @@ Public Class LasWriter : Implements IDisposable
         )
     End Sub
 
+    ''' <summary>
+    ''' default writer for LAS file format version 1.2 and point format is 2(rgb)
+    ''' </summary>
+    ''' <param name="lasfile"></param>
+    ''' <param name="xScale"></param>
+    ''' <param name="yScale"></param>
+    ''' <param name="zScale"></param>
+    ''' <param name="xOffset"></param>
+    ''' <param name="yOffset"></param>
+    ''' <param name="zOffset"></param>
+    ''' <param name="versionMajor"></param>
+    ''' <param name="versionMinor"></param>
+    ''' <param name="pointDataFormat"></param>
     Public Sub New(lasfile As Stream,
                    Optional xScale As Double = 0.0001,
                    Optional yScale As Double = 0.0001,
@@ -76,8 +89,8 @@ Public Class LasWriter : Implements IDisposable
                    Optional yOffset As Double = 0,
                    Optional zOffset As Double = 0,
                    Optional versionMajor As Byte = 1,
-                   Optional versionMinor As Byte = 1,
-                   Optional pointDataFormat As Byte = 1)
+                   Optional versionMinor As Byte = 2,
+                   Optional pointDataFormat As Byte = 2)
 
         If versionMajor <> 1 Then
             Throw New Exception("given VersionMajor is not supported yet")
