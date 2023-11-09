@@ -148,21 +148,21 @@ Public Class LasReader : Implements IDisposable
         Dim userData As Byte = reader.ReadByte()
         Dim pointSourceId As UShort = reader.ReadUInt16()
         Dim gpsTime As Double = 0
-        Dim rgb As Color
+        Dim rgb As RGBColor
 
         Select Case PointDataFormat
             Case 1
                 gpsTime = reader.ReadDouble()
             Case 2
                 ' rgb
-                rgb = Color.FromArgb(
+                rgb = RGBColor.FromArgb(
                     reader.ReadUInt16,
                     reader.ReadUInt16,
                     reader.ReadUInt16
                 )
             Case 3
                 gpsTime = reader.ReadDouble
-                rgb = Color.FromArgb(
+                rgb = RGBColor.FromArgb(
                     reader.ReadUInt16,
                     reader.ReadUInt16,
                     reader.ReadUInt16
