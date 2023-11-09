@@ -95,12 +95,6 @@ Public Class LasWriter : Implements IDisposable
         If versionMajor <> 1 Then
             Throw New Exception("given VersionMajor is not supported yet")
         End If
-        If versionMinor <> 1 Then
-            Throw New Exception("given versionMinor is not supported yet")
-        End If
-        If pointDataFormat <> 0 AndAlso pointDataFormat <> 1 Then
-            Throw New Exception("given pointDataFormat is not supported yet")
-        End If
 
         _xScale = xScale
         _yScale = yScale
