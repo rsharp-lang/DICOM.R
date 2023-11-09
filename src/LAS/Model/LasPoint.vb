@@ -1,5 +1,4 @@
-﻿Imports System.Drawing
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -34,7 +33,7 @@ Namespace Model
         ''' format 2 and 3
         ''' </summary>
         ''' <returns></returns>
-        Public Property rgb As Color
+        Public Property rgb As RGBColor
 
         Private Property IPointCloud_intensity As Double Implements IPointCloud.intensity
             Get
@@ -55,7 +54,7 @@ Namespace Model
                 {NameOf(GPSTime), GPSTime}
             }
 
-            Return $"[{X},{Y},{Z}] {intensity} {metadata.GetJson}"
+            Return $"[{X},{Y},{Z}] {intensity} {rgb.ToString} {metadata.GetJson}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -195,7 +195,7 @@ Public Class LasWriter : Implements IDisposable
 
         binaryWriter.Write(lasPoint.scanFlag)
         binaryWriter.Write(lasPoint.class)
-        binaryWriter.Write(lasPoint.ScanAngleRank)
+        binaryWriter.Write(lasPoint.scanAngleRank)
         binaryWriter.Write(lasPoint.userdata)
         binaryWriter.Write(lasPoint.pointSourceID)
 
@@ -203,14 +203,14 @@ Public Class LasWriter : Implements IDisposable
             Case 1
                 binaryWriter.Write(lasPoint.GPSTime)
             Case 2
-                binaryWriter.Write(CUShort(lasPoint.rgb.R))
-                binaryWriter.Write(CUShort(lasPoint.rgb.G))
-                binaryWriter.Write(CUShort(lasPoint.rgb.B))
+                binaryWriter.Write(lasPoint.rgb.Red)
+                binaryWriter.Write(lasPoint.rgb.Green)
+                binaryWriter.Write(lasPoint.rgb.Blue)
             Case 3
                 binaryWriter.Write(lasPoint.GPSTime)
-                binaryWriter.Write(CUShort(lasPoint.rgb.R))
-                binaryWriter.Write(CUShort(lasPoint.rgb.G))
-                binaryWriter.Write(CUShort(lasPoint.rgb.B))
+                binaryWriter.Write(lasPoint.rgb.Red)
+                binaryWriter.Write(lasPoint.rgb.Green)
+                binaryWriter.Write(lasPoint.rgb.Blue)
         End Select
     End Sub
 
