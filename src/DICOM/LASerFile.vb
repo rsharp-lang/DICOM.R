@@ -60,6 +60,16 @@ Module LASerFile
         Return raster.GetPointCloud(Of LasPoint)(skipZero:=True)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raster"></param>
+    ''' <param name="file">
+    ''' the format version of the las file is 1.2, and
+    ''' the point data format is 2(RGB) value
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("write.las")>
     Public Function writeLas(<RRawVectorArgument> raster As Object, file As Object, Optional env As Environment = Nothing) As Object
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)

@@ -36,7 +36,14 @@ declare namespace LASer {
    function points(las: object): object;
    module write {
       /**
-        * @param env default value Is ``null``.
+       * 
+       * 
+        * @param raster -
+        * @param file the format version of the las file is 1.2, and
+        *  the point data format is 2(RGB) value
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function las(raster: any, file: any, env?: object): any;
    }
