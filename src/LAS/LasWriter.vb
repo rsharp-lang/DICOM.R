@@ -26,7 +26,10 @@ Public Class LasWriter : Implements IDisposable
     Dim numberofpoints As Integer = 0
     Dim disposedValue As Boolean
 
-    Public Const software As String = "DICOM/LASer@SMRUCC             "
+    ''' <summary>
+    ''' 32 bytes
+    ''' </summary>
+    Public Const software As String = "DICOM/LASer@SMRUCC              "
     Public Const Magic As String = "LASF"
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -89,6 +92,11 @@ Public Class LasWriter : Implements IDisposable
         Call HeaderPlaceholder()
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Shared Function charInts(s As String) As Byte()
+        Return s.Select(Function(c) CByte(Asc(c))).ToArray
+    End Function
+
     Private Sub HeaderPlaceholder()
         Const fileSourceId As UShort = 0
         Const reserved As UShort = 0
@@ -112,11 +120,11 @@ Public Class LasWriter : Implements IDisposable
         binaryWriter.Write(prjidGuid1)
         binaryWriter.Write(prjidGuid2)
         binaryWriter.Write(prjidGuid3)
-        binaryWriter.Write(prjidGuid4.Select(Function(c) CByte(Asc(c))).ToArray)
+        binaryWriter.Write(charInts(prjidGuid4))
         binaryWriter.Write(_versionMajor)
         binaryWriter.Write(_versionMinor)
-        binaryWriter.Write(systemIdentifier.MD5.Select(Function(c) CByte(Asc(c))).ToArray)
-        binaryWriter.Write(software)
+        binaryWriter.Write(charInts(systemIdentifier))
+        binaryWriter.Write(charInts(software))
         binaryWriter.Write(fileCreationDayOfYear)
         binaryWriter.Write(fileCreationYear)
         binaryWriter.Write(headerSize)
