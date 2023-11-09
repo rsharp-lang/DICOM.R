@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Model
 
-    Public Structure LasPoint : Implements PointF3D
+    Public Structure LasPoint : Implements PointF3D, IPointCloud
 
         Public Property X As Double Implements Layout2D.X
         Public Property Y As Double Implements Layout2D.Y
@@ -17,6 +17,15 @@ Namespace Model
         Public Property userdata As Byte
         Public Property pointSourceID As UShort
         Public Property GPSTime As Double
+
+        Private Property IPointCloud_intensity As Double Implements IPointCloud.intensity
+            Get
+                Return CDbl(intensity)
+            End Get
+            Set(value As Double)
+                intensity = CUShort(value)
+            End Set
+        End Property
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
