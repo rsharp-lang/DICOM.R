@@ -56,8 +56,8 @@ Public Class LasWriter : Implements IDisposable
             Optional yOffset As Double = 0,
             Optional zOffset As Double = 0,
             Optional versionMajor As Byte = 1,
-            Optional versionMinor As Byte = 1,
-            Optional pointDataFormat As Byte = 1)
+            Optional versionMinor As Byte = 2,
+            Optional pointDataFormat As Byte = 2)
 
         Call Me.New(
             lasfile:=lasfile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False),

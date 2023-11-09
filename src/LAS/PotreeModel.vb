@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.DICOM.LASer.Model
 Imports SMRUCC.DICOM.LASer.Potree
 
 ''' <summary>
@@ -27,6 +28,31 @@ Public Module PotreeModel
 
         Call las.Dispose()
         Call lasfile.FileCopy($"{dir}/data/r.las")
+        Call cloud.GetJson.SaveTo($"{dir}/cloud.js")
+
+        Return True
+    End Function
+
+    Public Function ExportModel(las As IEnumerable(Of LasPoint), dir As String) As Boolean
+        Dim cloud As New Cloud With {
+            .hierarchy = {New String() {"r", "5202"}},
+            .scale = 0.01,
+            .octreeDir = "data",
+            .pointAttributes = "LAS",
+            .spacing = 0.05,
+            .version = "1.2",
+            .boundingBox = New boundingBox,
+            .tightBoundingBox = New boundingBox
+        }
+        Dim laspath As String = $"{dir}/data/r.las"
+        Dim lasfile As New LasWriter(laspath)
+
+        For Each p As LasPoint In las
+            Call lasfile.WritePoint(p)
+        Next
+
+        Call lasfile.Flush()
+        Call lasfile.Dispose()
         Call cloud.GetJson.SaveTo($"{dir}/cloud.js")
 
         Return True
