@@ -1,0 +1,34 @@
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.DICOM.LASer.Potree
+
+''' <summary>
+''' Potree http point cloud request helper
+''' </summary>
+Public Module PotreeModel
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="las"></param>
+    ''' <param name="dir">the model saved dir path</param>
+    ''' <returns></returns>
+    Public Function ExportModel(las As LasReader, dir As String) As Boolean
+        Dim lasfile As String = las.sourcefile
+        Dim cloud As New Cloud With {
+            .hierarchy = {New String() {"r", "5202"}},
+            .scale = {las.XScale, las.YScale, las.ZScale}.Average,
+            .octreeDir = "data",
+            .pointAttributes = "LAS",
+            .spacing = 0.05,
+            .version = $"{las.VersionMajor}.{las.VersionMinor}",
+            .boundingBox = New boundingBox,
+            .tightBoundingBox = New boundingBox
+        }
+
+        Call las.Dispose()
+        Call lasfile.FileCopy($"{dir}/data/r.las")
+        Call cloud.GetJson.SaveTo($"{dir}/cloud.js")
+
+        Return True
+    End Function
+End Module

@@ -40,8 +40,11 @@ Public Class LasReader : Implements IDisposable
     Dim currentPointIndex As Integer = 0
     Dim disposedValue As Boolean
 
+    Public ReadOnly Property sourcefile As String
+
     Public Sub New(lasfile As String)
         reader = New BinaryReader(lasfile.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
+        sourcefile = lasfile
 
         Call MagicValidates()
         Call ParseHeaders()
@@ -166,6 +169,9 @@ Public Class LasReader : Implements IDisposable
     '     MyBase.Finalize()
     ' End Sub
 
+    ''' <summary>
+    ''' just close the binary data reader
+    ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
         Dispose(disposing:=True)
