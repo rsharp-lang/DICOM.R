@@ -78,6 +78,18 @@ declare namespace NRRD {
       */
       function nrrd(file: any, rasters: any, env?: object): any;
       /**
+       * create a file writer session for save large raster data collection
+       * 
+       * 
+        * @param file -
+        * @param z 
+        * + default value Is ``1``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function nrrd_session(file: any, dims: any, z?: object, env?: object): object;
+      /**
        * write the NRRD raster data to PLY point cloud model
        * 
        * 

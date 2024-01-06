@@ -25,3 +25,4 @@
 + [as.pointMatrix](NRRD/as.pointMatrix.1) 
 + [write.ply](NRRD/write.ply.1) write the NRRD raster data to PLY point cloud model
 + [write.nrrd](NRRD/write.nrrd.1) create a nrrd file based on a given collection of the image data objects.
++ [write.nrrd_session](NRRD/write.nrrd_session.1) create a file writer session for save large raster data collection
