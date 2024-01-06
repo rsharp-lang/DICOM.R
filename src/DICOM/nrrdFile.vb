@@ -214,6 +214,6 @@ Public Module nrrdFile
 
         Dim writer As New FileWriterSession(buf.TryCast(Of Stream))
         writer.WriteHeader(dim_size, z)
-        Return writer
+        Return New WriteNrrdFunction(session:=writer)
     End Function
 End Module

@@ -11,6 +11,10 @@ Public Class WriteNrrdFunction : Inherits RDefaultFunction
 
     Private disposedValue As Boolean
 
+    Sub New(session As FileWriterSession)
+        Me.session = session
+    End Sub
+
     <RDefaultFunction>
     Public Function save(raster As Object, Optional env As Environment = Nothing) As Object
         If raster Is Nothing Then
