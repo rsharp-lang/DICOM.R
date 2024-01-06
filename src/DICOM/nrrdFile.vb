@@ -2,6 +2,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
@@ -106,6 +107,23 @@ Public Module nrrdFile
         )
     End Function
 
+    ''' <summary>
+    ''' create a nrrd file based on a given collection of the image data objects.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="rasters">a collection of the image data objects. all of the raster object inside
+    ''' this given collection should be in the same dimension size!</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the required <paramref name="rasters"/> data collection element could be one of the:
+    ''' 
+    ''' 1. the gdi+ <see cref="Image"/> data object
+    ''' 2. the <see cref="RasterMatrix"/> for do heatmap rendering
+    ''' 
+    ''' for a collection with only one ratser object inside, 2d nrrd object will be generates,
+    ''' for a collection with multiple raster object inside, 3d nrrd object will be generates.
+    ''' </remarks>
     <ExportAPI("write.nrrd")>
     Public Function writeNrrd(file As Object, <RRawVectorArgument> rasters As Object, Optional env As Environment = Nothing) As Object
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
@@ -117,19 +135,34 @@ Public Module nrrdFile
         Dim imgs = pipeline.TryCreatePipeline(Of Image)(rasters, env)
 
         If imgs.isError Then
-            Return imgs.getError
-        End If
+            imgs = pipeline.TryCreatePipeline(Of RasterMatrix)(rasters, env)
 
-        Dim imgList As Image() = imgs.populates(Of Image)(env).ToArray
-        Dim dimSize As Size = imgList(0).Size
+            If imgs.isError Then
+                Return imgs.getError
+            End If
 
-        ' matrix needs reverse for keeps the right order
-        dimSize = New Size(dimSize.Height, dimSize.Width)
+            ' save rasters matrix as nrrd file
+            Dim imgList As RasterMatrix() = imgs.populates(Of RasterMatrix)(env).ToArray
+            Dim dimSize As Size = imgList(0).Size
+
+            ' matrix needs reverse for keeps the right order
+            dimSize = New Size(dimSize.Height, dimSize.Width)
+
+            Using s As Stream = buf.TryCast(Of Stream)
+                FileWriter.WriteFile(New BinaryDataWriter(s, Encodings.ASCII), dimSize, imgList)
+            End Using
+        Else
+            Dim imgList As Image() = imgs.populates(Of Image)(env).ToArray
+            Dim dimSize As Size = imgList(0).Size
+
+            ' matrix needs reverse for keeps the right order
+            dimSize = New Size(dimSize.Height, dimSize.Width)
 
 #Enable Warning
-        Using s As Stream = buf.TryCast(Of Stream)
-            FileWriter.WriteFile(New BinaryDataWriter(s, Encodings.ASCII), dimSize, imgList)
-        End Using
+            Using s As Stream = buf.TryCast(Of Stream)
+                FileWriter.WriteFile(New BinaryDataWriter(s, Encodings.ASCII), dimSize, imgList)
+            End Using
+        End If
 
         Return True
     End Function
