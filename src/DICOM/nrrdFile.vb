@@ -4,7 +4,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.DICOM.NRRD
 Imports SMRUCC.Rsharp.Runtime
@@ -189,5 +191,29 @@ Public Module nrrdFile
         End If
 
         Return True
+    End Function
+
+    ''' <summary>
+    ''' create a file writer session for save large raster data collection
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.nrrd_session")>
+    <RApiReturn(GetType(FileWriterSession))>
+    Public Function writerSession(file As Object, <RRawVectorArgument> dims As Object, Optional z As Integer = 1, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim dim_size As Size = InteropArgumentHelper.getSize(dims, env, [default]:="0,0").SizeParser
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+        If dim_size.Area = 0 Then
+            Return Internal.debug.stop("invalid dimension size value!", env)
+        End If
+
+        Dim writer As New FileWriterSession(buf.TryCast(Of Stream))
+        writer.WriteHeader(dim_size, z)
+        Return writer
     End Function
 End Module

@@ -62,4 +62,6 @@
     <ProjectReference Include="..\NRRD\NRRD.vbproj" />
   </ItemGroup>
 
+  <Import Project="..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
+
 </Project>
