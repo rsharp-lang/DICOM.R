@@ -41,10 +41,20 @@ declare namespace NRRD {
    */
    function getRasterLayer(raster: object, layer: object): object;
    /**
+    * get nrrd header metadata
+    * 
+    * 
+     * @param nrrd -
    */
    function metadata(nrrd: object): object;
    /**
-     * @param env default value Is ``null``.
+    * open a nrrd @``T:SMRUCC.DICOM.NRRD.FileReader``
+    * 
+    * 
+     * @param file -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function nrrdRead(file: any, env?: object): object;
    module write {

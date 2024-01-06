@@ -17,8 +17,8 @@
  fancier things like projection, histogram equalization, and filtered
  resampling (up and down) with arbitrary seperable kernels.
 
-+ [nrrdRead](NRRD/nrrdRead.1) 
-+ [metadata](NRRD/metadata.1) 
++ [nrrdRead](NRRD/nrrdRead.1) open a nrrd @``T:SMRUCC.DICOM.NRRD.FileReader``
++ [metadata](NRRD/metadata.1) get nrrd header metadata
 + [getRaster](NRRD/getRaster.1) 
 + [getRasterLayer](NRRD/getRasterLayer.1) 
 + [as.pointCloud](NRRD/as.pointCloud.1) 

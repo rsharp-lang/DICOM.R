@@ -33,6 +33,17 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("NRRD")>
 Public Module nrrdFile
 
+    ''' <summary>
+    ''' open a nrrd <see cref="FileReader"/>
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' imports "NRRD" from "DICOM";
+    ''' 
+    ''' let nrrd = NRRD::nrrdRead(file = "./test.nrrd");
+    ''' </example>
     <ExportAPI("nrrdRead")>
     <RApiReturn(GetType(FileReader))>
     Public Function nrrdRead(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -46,6 +57,19 @@ Public Module nrrdFile
         Return reader
     End Function
 
+    ''' <summary>
+    ''' get nrrd header metadata
+    ''' </summary>
+    ''' <param name="nrrd"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' imports "NRRD" from "DICOM";
+    ''' 
+    ''' let nrrd = NRRD::nrrdRead(file = "./test.nrrd");
+    ''' let meta = NRRD::metadata(nrrd);
+    ''' 
+    ''' str(as.list(meta));
+    ''' </example>
     <ExportAPI("metadata")>
     Public Function GetMetadata(nrrd As FileReader) As Metadata
         Return nrrd.NrddHeader
