@@ -1,11 +1,36 @@
 .\" man page create by R# package system.
 .TH NRRD 1 2000-Jan "write.nrrd" "write.nrrd"
 .SH NAME
-write.nrrd \- 
+write.nrrd \- create a nrrd file based on a given collection of the image data objects.
 .SH SYNOPSIS
 \fIwrite.nrrd(\fBfile\fR as any, 
 \fBrasters\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+create a nrrd file based on a given collection of the image data objects.
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBrasters\fB \fR\- a collection of the image data objects. all of the raster object inside
+ this given collection should be in the same dimension size!. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+the required **`rasters`** data collection element could be one of the:
+ 
+ 1. the gdi+ @\fBT:System.Drawing.Image\fR data object
+ 2. the @\fBT:Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.RasterMatrix\fR for do heatmap rendering
+ 
+ for a collection with only one ratser object inside, 2d nrrd object will be generates,
+ for a collection with multiple raster object inside, 3d nrrd object will be generates.
+.PP
 .SH SEE ALSO
 NRRD
 .SH FILES
