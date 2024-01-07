@@ -77,6 +77,12 @@ Public Module BytesBuffer
         Return buffer
     End Function
 
+    ''' <summary>
+    ''' parse the raw data buffer as numeric vector
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <param name="options"></param>
+    ''' <returns></returns>
     Public Function parseNRRDRawData(buffer As BinaryDataReader, options As Metadata) As Array
         Dim totalLen As Integer = 1
         Dim sizes As Integer() = options.sizes

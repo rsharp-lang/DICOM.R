@@ -26,7 +26,13 @@ Public Module FileWriter
         Call file.Write(str & vbLf, BinaryStringFormat.NoPrefixOrTermination)
     End Sub
 
-    Friend Sub WriteAsciiHeaderCommon(file As BinaryDataWriter, dims As Size, len As Integer)
+    ''' <summary>
+    ''' data endian is always little
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="len"></param>
+    Friend Sub WriteAsciiHeaderCommon(ByRef file As BinaryDataWriter, dims As Size, len As Integer)
         Dim w = dims.Width
         Dim h = dims.Height
 
