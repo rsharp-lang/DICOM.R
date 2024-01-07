@@ -77,14 +77,35 @@ Public Module nrrdFile
         Return nrrd.NrddHeader
     End Function
 
+    ''' <summary>
+    ''' get the raster data object from nrrd file
+    ''' </summary>
+    ''' <param name="nrrd"></param>
+    ''' <returns>
+    ''' this function generates the different raster object type based on the dimension value:
+    ''' 
+    ''' 1. for dimension 2d: <see cref="RasterImage"/>
+    ''' 2. for dimension 3d: <see cref="RasterPointCloud"/>
+    ''' 
+    ''' </returns>
     <ExportAPI("getRaster")>
     Public Function GetRaster(nrrd As FileReader) As RasterObject
         Return nrrd.LoadRaster
     End Function
 
+    ''' <summary>
+    ''' get the <see cref="RasterImage"/> from a specific layer in point cloud object
+    ''' </summary>
+    ''' <param name="raster"></param>
+    ''' <param name="layer">the layer z-index</param>
+    ''' <returns></returns>
     <ExportAPI("getRasterLayer")>
-    Public Function GetRasterLayer(raster As RasterPointCloud, layer As Integer) As RasterObject
-        Return raster.GetRasterImage(layer)
+    Public Function GetRasterLayer(raster As RasterObject, layer As Integer) As RasterImage
+        If TypeOf raster Is RasterImage Then
+            Return raster
+        Else
+            Return DirectCast(raster, RasterPointCloud).GetRasterImage(layer)
+        End If
     End Function
 
     <ExportAPI("as.pointCloud")>

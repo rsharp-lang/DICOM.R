@@ -1,6 +1,18 @@
-﻿Public Class RasterObject
+﻿
+''' <summary>
+''' an abstract raw raster object for <see cref="RasterImage"/> and <see cref="RasterPointCloud"/>
+''' </summary>
+''' <remarks>
+''' the <see cref="metadata"/> contains the necessary information for 
+''' decode the raster object from file.
+''' </remarks>
+Public Class RasterObject
 
     Public Property metadata As Metadata
+    ''' <summary>
+    ''' the dimension size value: [w,h,z]
+    ''' </summary>
+    ''' <returns></returns>
     Public Property dimensionSize As Integer()
 
     Public Shared Function CreateRasterObject(metadata As Metadata, rawdata As Array) As RasterObject

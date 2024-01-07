@@ -27,6 +27,9 @@ Public Module FileWriter
     End Sub
 
     Friend Sub WriteAsciiHeaderCommon(file As BinaryDataWriter, dims As Size, len As Integer)
+        Dim w = dims.Width
+        Dim h = dims.Height
+
         file.ByteOrder = ByteOrder.LittleEndian
 
         Call file.WriteString(FileReader.MagicBytes)
@@ -34,7 +37,7 @@ Public Module FileWriter
         Call file.WriteString("# This data is a rawdata file generated from the R# language DICOM image library.")
         Call file.WriteString($"type: float")
         Call file.WriteString($"dimension: 3")
-        Call file.WriteString($"sizes: {dims.Height} {dims.Width} {len}")
+        Call file.WriteString($"sizes: {w} {h} {len}")
         Call file.WriteString($"encoding: raw")
         Call file.WriteString($"endian: little")
         Call file.WriteString($"space directions: (1,0,0) (0,1,0) (0,0,1)")
@@ -59,7 +62,9 @@ Public Class FileWriterSession : Implements IDisposable
 
     ReadOnly file As BinaryDataWriter
 
-    Private disposedValue As Boolean
+    Dim disposedValue As Boolean
+    Dim z_len As Integer
+    Dim dimension As Size
 
     Sub New(file As Stream)
         Me.file = New BinaryDataWriter(file, Encodings.ASCII)
@@ -70,6 +75,9 @@ Public Class FileWriterSession : Implements IDisposable
     End Sub
 
     Public Sub WriteHeader(dims As Size, z As Integer)
+        dimension = dims
+        z_len = z
+
         Call FileWriter.WriteAsciiHeaderCommon(file, dims, len:=z)
         Call file.Flush()
     End Sub
