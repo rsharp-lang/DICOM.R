@@ -97,14 +97,14 @@ Public Module nrrdFile
     ''' get the <see cref="RasterImage"/> from a specific layer in point cloud object
     ''' </summary>
     ''' <param name="raster"></param>
-    ''' <param name="layer">the layer z-index</param>
+    ''' <param name="layer">the layer z-index, based 1 index</param>
     ''' <returns></returns>
     <ExportAPI("getRasterLayer")>
     Public Function GetRasterLayer(raster As RasterObject, layer As Integer) As RasterImage
         If TypeOf raster Is RasterImage Then
             Return raster
         Else
-            Return DirectCast(raster, RasterPointCloud).GetRasterImage(layer)
+            Return DirectCast(raster, RasterPointCloud).GetRasterImage(layer - 1)
         End If
     End Function
 
