@@ -34,7 +34,7 @@ Public Module FileWriter
         Call file.WriteString("# This data is a rawdata file generated from the R# language DICOM image library.")
         Call file.WriteString($"type: float")
         Call file.WriteString($"dimension: 3")
-        Call file.WriteString($"sizes: {dims.Width} {dims.Height} {len}")
+        Call file.WriteString($"sizes: {dims.Height} {dims.Width} {len}")
         Call file.WriteString($"encoding: raw")
         Call file.WriteString($"endian: little")
         Call file.WriteString($"space directions: (1,0,0) (0,1,0) (0,0,1)")
