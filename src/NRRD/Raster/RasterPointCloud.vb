@@ -56,7 +56,7 @@ Public Class RasterPointCloud : Inherits RasterObject
             .ToArray
 
         Return New RasterImage With {
-            .dimensionSize = {dims(1), dims(0)},
+            .dimensionSize = dims,
             .grayscale = volumn(i),
             .metadata = metadata
         }
