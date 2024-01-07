@@ -89,7 +89,7 @@ Public Class FileWriterSession : Implements IDisposable
     End Sub
 
     Public Sub WriterRasterLayer(matrix As RasterMatrix)
-        Dim intensity As Single()
+        Dim intensity As Single() = Nothing
 
         For Each row As Vector In matrix.GetRowScans
             intensity = row.AsSingle

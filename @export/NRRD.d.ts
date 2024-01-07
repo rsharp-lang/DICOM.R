@@ -35,9 +35,22 @@ declare namespace NRRD {
       function pointMatrix(raster: object, skip_zero?: boolean): object;
    }
    /**
+    * get the raster data object from nrrd file
+    * 
+    * 
+     * @param nrrd -
+     * @return this function generates the different raster object type based on the dimension value:
+     *  
+     *  1. for dimension 2d: @``T:SMRUCC.DICOM.NRRD.RasterImage``
+     *  2. for dimension 3d: @``T:SMRUCC.DICOM.NRRD.RasterPointCloud``
    */
    function getRaster(nrrd: object): object;
    /**
+    * get the @``T:SMRUCC.DICOM.NRRD.RasterImage`` from a specific layer in point cloud object
+    * 
+    * 
+     * @param raster -
+     * @param layer the layer z-index, based 1 index
    */
    function getRasterLayer(raster: object, layer: object): object;
    /**
