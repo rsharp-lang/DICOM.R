@@ -7,6 +7,12 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 
+#If NET48 Then
+Imports Image = System.Drawing.Image
+#Else
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+#End If
+
 Public Module FileWriter
 
     Public Sub WriteFile(file As BinaryDataWriter, dims As Size, rasters As Image())
