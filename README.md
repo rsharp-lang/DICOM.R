@@ -42,3 +42,4 @@ graphics2D::rasterHeatmap(
 dev.off();
 ```
 
+View package [help pages](./vignettes/index.html)

@@ -1,9 +1,24 @@
 .\" man page create by R# package system.
 .TH NRRD 1 2000-Jan "getRaster" "getRaster"
 .SH NAME
-getRaster \- 
+getRaster \- get the raster data object from nrrd file
 .SH SYNOPSIS
 \fIgetRaster(\fBnrrd\fR as <generic> FileReader);\fR
+.SH DESCRIPTION
+.PP
+get the raster data object from nrrd file
+.PP
+.SH OPTIONS
+.PP
+\fBnrrd\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+this function generates the different raster object type based on the dimension value:
+ 
+ 1. for dimension 2d: @\fBT:SMRUCC.DICOM.NRRD.RasterImage\fR
+ 2. for dimension 3d: @\fBT:SMRUCC.DICOM.NRRD.RasterPointCloud\fR
+.PP
 .SH SEE ALSO
 NRRD
 .SH FILES

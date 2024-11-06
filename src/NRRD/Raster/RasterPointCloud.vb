@@ -24,7 +24,7 @@ Public Class RasterPointCloud : Inherits RasterObject
         Dim scale As Double
 
         For z As Integer = 1 To volumn.Length
-            Dim layer As RasterImage = GetRasterImage(z)
+            Dim layer As RasterImage = GetRasterImage(z - 1)
 
             For i As Integer = 0 To layer.dimensionSize(1) - 1
                 For j As Integer = 0 To layer.dimensionSize(0) - 1
@@ -48,12 +48,16 @@ Public Class RasterPointCloud : Inherits RasterObject
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="i">1 based offset value</param>
+    ''' <param name="i">0 based offset value</param>
     ''' <returns></returns>
     Public Function GetRasterImage(i As Integer) As RasterImage
+        Dim dims = dimensionSize _
+            .Take(2) _
+            .ToArray
+
         Return New RasterImage With {
-            .dimensionSize = dimensionSize.Take(2).ToArray,
-            .grayscale = volumn(i - 1),
+            .dimensionSize = dims,
+            .grayscale = volumn(i),
             .metadata = metadata
         }
     End Function

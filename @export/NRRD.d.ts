@@ -35,23 +35,73 @@ declare namespace NRRD {
       function pointMatrix(raster: object, skip_zero?: boolean): object;
    }
    /**
+    * get the raster data object from nrrd file
+    * 
+    * 
+     * @param nrrd -
+     * @return this function generates the different raster object type based on the dimension value:
+     *  
+     *  1. for dimension 2d: @``T:SMRUCC.DICOM.NRRD.RasterImage``
+     *  2. for dimension 3d: @``T:SMRUCC.DICOM.NRRD.RasterPointCloud``
    */
    function getRaster(nrrd: object): object;
    /**
+    * get the @``T:SMRUCC.DICOM.NRRD.RasterImage`` from a specific layer in point cloud object
+    * 
+    * 
+     * @param raster -
+     * @param layer the layer z-index, based 1 index
    */
    function getRasterLayer(raster: object, layer: object): object;
    /**
+    * get nrrd header metadata
+    * 
+    * 
+     * @param nrrd -
    */
    function metadata(nrrd: object): object;
    /**
-     * @param env default value Is ``null``.
+    * open a nrrd @``T:SMRUCC.DICOM.NRRD.FileReader``
+    * 
+    * 
+     * @param file -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function nrrdRead(file: any, env?: object): object;
    module write {
       /**
-        * @param env default value Is ``null``.
+       * create a nrrd file based on a given collection of the image data objects.
+       * 
+       * > the required **`rasters`** data collection element could be one of the:
+       * >  
+       * >  1. the gdi+ @``T:System.Drawing.Image`` data object
+       * >  2. the @``T:Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.RasterMatrix`` for do heatmap rendering
+       * >  
+       * >  for a collection with only one ratser object inside, 2d nrrd object will be generates,
+       * >  for a collection with multiple raster object inside, 3d nrrd object will be generates.
+       * 
+        * @param file -
+        * @param rasters a collection of the image data objects. all of the raster object inside
+        *  this given collection should be in the same dimension size!
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function nrrd(file: any, rasters: any, env?: object): any;
+      /**
+       * create a file writer session for save large raster data collection
+       * 
+       * 
+        * @param file -
+        * @param z 
+        * + default value Is ``1``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function nrrd_session(file: any, dims: any, z?: object, env?: object): object;
       /**
        * write the NRRD raster data to PLY point cloud model
        * 
