@@ -5,7 +5,7 @@
     <title>SMRUCC.DICOM.NRRD.Metadata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://rsharp.net/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -30,17 +30,28 @@
             <code id="clr_ts">
 # namespace SMRUCC.DICOM.NRRD
 export class Metadata {
-   type: <a href="/vignettes/clr/SMRUCC/DICOM/NRRD/Types.html">Types</a>;
+   blockSize: integer;
    dimension: integer;
-   sizes: integer;
    encoding: <a href="/vignettes/clr/SMRUCC/DICOM/NRRD/Encoding.html">Encoding</a>;
    endian: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/IO/ByteOrder.html">ByteOrder</a>;
+   sizes: integer;
    space_directions: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing3D/Point3D.html">Point3D[]</a>;
    space_origin: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing3D/Point3D.html">Point3D</a>;
-   blockSize: integer;
+   type: <a href="/vignettes/clr/SMRUCC/DICOM/NRRD/Types.html">Types</a>;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>encoding</code>: <a href="/vignettes/clr/SMRUCC/DICOM/NRRD/Encoding.html">Encoding</a></li>
+<li>use by <i>property</i> member <code>endian</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/IO/ByteOrder.html">ByteOrder</a></li>
+<li>use by <i>property</i> member <code>space_directions</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing3D/Point3D.html">Point3D</a></li>
+<li>use by <i>property</i> member <code>space_origin</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing3D/Point3D.html">Point3D</a></li>
+<li>use by <i>property</i> member <code>type</code>: <a href="/vignettes/clr/SMRUCC/DICOM/NRRD/Types.html">Types</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
@@ -49,8 +60,8 @@ export class Metadata {
     </div>
 </body>
 
-<script type="text/javascript" src="https://rsharp.net/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://rsharp.net/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
-</html>
+</html>

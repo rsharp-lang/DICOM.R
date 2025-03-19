@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.DICOM.LASer.LasReader</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>LasReader {SMRUCC.DICOM.LASer}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>LasReader</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.DICOM.LASer
+export class LasReader {
+   FileCreationDayOfYear: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   FileCreationYear: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   GeneratingSoftware: string;
+   # Project ID - GUID data 1
+   GuidData1: integer;
+   # Project ID - GUID data 2
+   GuidData2: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   # Project ID - GUID data 3
+   GuidData3: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   # Project ID - GUID data 4
+   #  8 chars
+   GuidData4: string;
+   HeaderSize: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   MaxX: double;
+   MaxY: double;
+   MaxZ: double;
+   MinX: double;
+   MinY: double;
+   MinZ: double;
+   NumberOfPoints: integer;
+   # scan0 of the point data region
+   OffsetToPointData: integer;
+   # Point Data Format ID: The point data format ID corresponds to the point data record format 
+   #  type. LAS 1.2 defines types 0, 1, 2 And 3.
+   PointDataFormat: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   PointDataRecordLength: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   sourcefile: string;
+   VersionMajor: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   VersionMinor: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   XOffset: double;
+   XScale: double;
+   YOffset: double;
+   YScale: double;
+   ZOffset: double;
+   ZScale: double;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>FileCreationDayOfYear</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>FileCreationYear</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>GuidData2</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>GuidData3</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>HeaderSize</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>PointDataFormat</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+<li>use by <i>property</i> member <code>PointDataRecordLength</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>VersionMajor</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+<li>use by <i>property</i> member <code>VersionMinor</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

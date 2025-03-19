@@ -16,6 +16,12 @@ open a nrrd @\fBT:SMRUCC.DICOM.NRRD.FileReader\fR
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+imports "NRRD" from "DICOM";
+ 
+ let nrrd = NRRD::nrrdRead(file = "./test.nrrd");
+.PP
 .SH SEE ALSO
 NRRD
 .SH FILES

@@ -1,4 +1,4 @@
-# NRRD
+﻿# NRRD
 
 ## Nearly Raw Raster Data
  
