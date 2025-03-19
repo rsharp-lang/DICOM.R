@@ -13,6 +13,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' ## Nearly Raw Raster Data
@@ -230,7 +231,7 @@ Public Module nrrdFile
             Return buf.TryCast(Of Message)
         End If
         If dim_size.Area = 0 Then
-            Return Internal.debug.stop("invalid dimension size value!", env)
+            Return RInternal.debug.stop("invalid dimension size value!", env)
         End If
 
         Dim writer As New FileWriterSession(buf.TryCast(Of Stream))
