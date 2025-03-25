@@ -76,7 +76,7 @@ declare namespace NRRD {
        * 
        * > the required **`rasters`** data collection element could be one of the:
        * >  
-       * >  1. the gdi+ @``T:System.Drawing.Image`` data object
+       * >  1. the gdi+ @``T:Microsoft.VisualBasic.Imaging.Image`` data object
        * >  2. the @``T:Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.RasterMatrix`` for do heatmap rendering
        * >  
        * >  for a collection with only one ratser object inside, 2d nrrd object will be generates,

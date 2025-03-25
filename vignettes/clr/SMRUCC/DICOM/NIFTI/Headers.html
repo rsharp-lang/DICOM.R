@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.DICOM.NIFTI.Headers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Headers {SMRUCC.DICOM.NIFTI}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Headers</h2>
+
+        <h3>Description</h3>
+
+        <p>Overview of the header structure
+ 
+ In order to keep compatibility with the analyze format, 
+ the size of the nifti header was maintained at 348 bytes
+ as in the old format. Some fields were reused, some were 
+ preserved, but ignored, and some were entirely 
+ overwritten.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.DICOM.NIFTI
+export class Headers {
+   # Auxiliary filename.
+   aux_file: string;
+   # Number of bits per voxel.
+   bitpix: integer;
+   # Maximum display intensity.
+   cal_max: double;
+   # Minimum display intensity.
+   cal_min: double;
+   # Not used; compatibility with analyze.
+   data_type: string;
+   # Data type.
+   #  
+   #  The field int datatype indicates the type of the data stored.
+   datatype: <a href="/vignettes/clr/SMRUCC/DICOM/NIFTI/DataTypes.html">DataTypes</a>;
+   # Not used; compatibility with analyze.
+   db_name: string;
+   # Any text.
+   descrip: string;
+   # Data array dimensions.
+   #  
+   #  Image dimensions
+   #  
+   #  The field Short Dim[8] contains the size Of the image array. The first 
+   #  element (Dim[0]) contains the number Of dimensions (1-7). If Dim[0] Is 
+   #  Not In this interval, the data Is assumed To have opposite endianness And 
+   #  so, should be Byte-swapped (the nifti standard does Not specify a 
+   #  specific field For endianness, but encourages the use Of Dim[0] For this 
+   #  purpose). The dimensions 1, 2 And 3 are assumed To refer To space (x, y, z), 
+   #  the 4th dimension Is assumed To refer To time, And the remaining 
+   #  dimensions, 5, 6 And 7, can be anything Else. The value Dim[i] Is a 
+   #  positive Integer representing the length Of the i-th dimension.
+   dim: integer;
+   # Encoding directions (phase, frequency, slice).
+   #  
+   #  The field char dim_info stores, in just one byte, the frequency 
+   #  encoding direction (1, 2 or 3), the phase encoding direction 
+   #  (1, 2 or 3), and the direction in which the volume was sliced 
+   #  during the acquisition (1, 2 or 3). For spiral sequences, frequency 
+   #  and phase encoding are both set as 0. The reason to collapse all
+   #  this information in just one byte was to save space. See also 
+   #  the fields short slice<em>start, short slice</em>end, char slice_code 
+   #  and float slice_duration.
+   dim_info: string;
+   # Not used; compatibility with analyze.
+   extents: integer;
+   # Not used; compatibility with analyze.
+   glmax: integer;
+   # Not used; compatibility with analyze.
+   glmin: integer;
+   # nifti intent.
+   #  
+   #  Intent
+   #  The short intent_code Is an integer that codifies that the data
+   #  Is supposed to contain. Some of these codes require extra-parameters, 
+   #  such as the number of degrees of freedom (df). These extra 
+   #  parameters, when needed, can be stored in the fields <code>intent_p*</code> 
+   #  when they can be applied to the image as a while, Or in the 
+   #  5th dimension if voxelwise.
+   intent_code: integer;
+   # Name or meaning of the data.
+   intent_name: string;
+   # 1st intent parameter.
+   intent_p1: double;
+   # 2nd intent parameter.
+   intent_p2: double;
+   # 3rd intent parameter.
+   intent_p3: double;
+   # Magic string.
+   #  
+   #  The char magic[4] field is a “magic” string that declares 
+   #  the file as conforming with the nifti standard. It was 
+   #  placed at the very end of the header to avoid overwriting 
+   #  fields that are needed for the analyze format. Ideally, 
+   #  however, this string should be checked first. It should be 
+   #  'ni1' (or '6E 69 31 00' in hexadecimal) for .hdr/.img pair, 
+   #  or 'n+1' (or '6E 2B 31 00') for a .nii single file. In the 
+   #  absence of this string, the file should be treated as 
+   #  analyze. Future versions of the nifti format may increment 
+   #  the string to 'n+2', 'n+3', etc. Indeed, as of 2012, a second 
+   #  version is under preparation.
+   magic: string;
+   # Grid spacings (unit per dimension).
+   pixdim: double;
+   # Use the quaternion fields.
+   qform_code: integer;
+   # Quaternion x shift.
+   qoffset_x: double;
+   # Quaternion y shift.
+   qoffset_y: double;
+   # Quaternion z shift.
+   qoffset_z: double;
+   # Quaternion b parameter.
+   quatern_b: double;
+   # Quaternion c parameter.
+   quatern_c: double;
+   # Quaternion d parameter.
+   quatern_d: double;
+   # Not used; compatibility with analyze.
+   regular: string;
+   # Data scaling, offset.
+   scl_inter: double;
+   # Data scaling, slope.
+   scl_slope: double;
+   # Not used; compatibility with analyze.
+   session_error: integer;
+   # Use of the affine fields.
+   sform_code: integer;
+   # Size of the header. Must be 348 (bytes).
+   #  
+   #  The field int sizeof_hdr stores the size of the header. 
+   #  It must be 348 for a nifti or analyze format.
+   sizeof_hdr: integer;
+   # Slice timing order.
+   slice_code: string;
+   # Time for one slice.
+   slice_duration: double;
+   # Last slice index.
+   slice_end: integer;
+   # First slice index.
+   slice_start: integer;
+   # 1st row affine transform
+   srow_x: double;
+   # 2nd row affine transform.
+   srow_y: double;
+   # 3rd row affine transform.
+   srow_z: double;
+   # Time axis shift.
+   toffset: double;
+   # Offset into a .nii file.
+   vox_offset: double;
+   # Units of pixdim[1..4].
+   xyzt_units: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>datatype</code>: <a href="/vignettes/clr/SMRUCC/DICOM/NIFTI/DataTypes.html">DataTypes</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

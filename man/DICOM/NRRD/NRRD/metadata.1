@@ -12,6 +12,15 @@ get nrrd header metadata
 .PP
 \fBnrrd\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+imports "NRRD" from "DICOM";
+ 
+ let nrrd = NRRD::nrrdRead(file = "./test.nrrd");
+ let meta = NRRD::metadata(nrrd);
+ 
+ str(as.list(meta));
+.PP
 .SH SEE ALSO
 NRRD
 .SH FILES

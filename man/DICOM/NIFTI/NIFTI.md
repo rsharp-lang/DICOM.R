@@ -1,4 +1,4 @@
-# NIFTI
+﻿# NIFTI
 
 The Neuroimaging Informatics Technology Initiative (nifti)
  file format was envisioned about a decade ago as a replacement 

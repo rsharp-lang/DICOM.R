@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.DICOM.LASer.Model.LasPoint</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>LasPoint {SMRUCC.DICOM.LASer.Model}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>LasPoint</h2>
+
+        <h3>Description</h3>
+
+        <p>the LASer POINT DATA RECORD</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.DICOM.LASer.Model
+export class LasPoint extends <a href="/vignettes/clr/System/ValueType.html">ValueType</a> {
+   class: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   GPSTime: double;
+   intensity: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   pointSourceID: <a href="/vignettes/clr/System/UInt16.html">UInt16</a>;
+   # format 2 and 3
+   rgb: <a href="/vignettes/clr/SMRUCC/DICOM/LASer/Model/RGBColor.html">RGBColor</a>;
+   scanAngleRank: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   # 8 bits
+   #  
+   #  + Return Number 3 bits (bits 0, 1, 2) 3 bits * 
+   #  + Number of Returns (given pulse) 3 bits (bits 3, 4, 5) 3 bits *
+   #  + Scan Direction Flag 1 bit (bit 6) 1 bit *
+   #  + Edge of Flight Line 1 bit (bit 7) 1 bit *
+   scanFlag: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   userdata: <a href="/vignettes/clr/System/Byte.html">Byte</a>;
+   X: double;
+   Y: double;
+   Z: double;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/ValueType.html">ValueType</a> class: <a href="/vignettes/clr/System/ValueType.html">ValueType</a></li>
+<li>use by <i>property</i> member <code>class</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+<li>use by <i>property</i> member <code>intensity</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>pointSourceID</code>: <a href="/vignettes/clr/System/UInt16.html">UInt16</a></li>
+<li>use by <i>property</i> member <code>rgb</code>: <a href="/vignettes/clr/SMRUCC/DICOM/LASer/Model/RGBColor.html">RGBColor</a></li>
+<li>use by <i>property</i> member <code>scanAngleRank</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+<li>use by <i>property</i> member <code>scanFlag</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+<li>use by <i>property</i> member <code>userdata</code>: <a href="/vignettes/clr/System/Byte.html">Byte</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
