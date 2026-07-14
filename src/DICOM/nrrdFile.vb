@@ -150,7 +150,7 @@ Public Module nrrdFile
             Return buf.TryCast(Of Message)
         End If
 
-        Return SimplePlyWriter.WriteAsciiText(
+        Return PlyWriter.WriteAsciiText(
             pointCloud:=raster.GetPointCloud(Of PointCloud)(skipZero:=True),
             buffer:=buf.TryCast(Of Stream)
         )
